@@ -175,21 +175,7 @@ public class CoursesPanel extends ContentPanel
 			add(addCourse);
 		}
 	}
-
-	public int horizontalCenterValue(Container guiObject)
-	{
-		return 485-((guiObject.getBounds().width)/2);
-	}
-	public int horizontalCenterValue(int width)
-	{
-		return 485-(width/2);
-	}
-	public Container centeredVersionOf(Container guiObject)
-	{
-		guiObject.setBounds(horizontalCenterValue(guiObject), guiObject.getBounds().y, guiObject.getBounds().width, guiObject.getBounds().height);
-		return guiObject;
-	}
-
+	
 	class PostingListener implements ActionListener
 	{
 		public void actionPerformed(ActionEvent event)
