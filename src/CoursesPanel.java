@@ -221,9 +221,16 @@ public class CoursesPanel extends ContentPanel
 				{
 					if (removeButtons[i].equals(button))
 					{
+						if (CourseNet.isStudent)
+						{
+							// Remove students from course
+						}
+						else	// Professor
+						{
+							// Remove course
+						}
 						courses.remove(i);
 						courses.trimToSize();
-						// This will also have to update the database, course info, etc.
 						addCoursePostings();
 						break;
 					}

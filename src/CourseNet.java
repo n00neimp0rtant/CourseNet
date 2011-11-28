@@ -5,16 +5,11 @@ import javax.swing.*;
 public class CourseNet extends JApplet {
 	
 	// containerPanel
-	
-	/*public static final int BLANK_PANEL = -1;
-	public static final int IDLE = 0;
-	public static final int LOGIN_PANEL = 1;
-	public static final int COURSES_PANEL = 2;
-	public static final int CALENDAR_PANEL = 3;*/
-	
 	ImagePanel containerPanel;
 	ContentPanel stuffPanel;
 	Thread panelWatchdog;
+	
+	public static boolean isStudent;
 	
 	
 	//Called when this applet is loaded into the browser.
@@ -30,10 +25,9 @@ public class CourseNet extends JApplet {
                         	while(true)
                         	{
                         		Panel panelType = stuffPanel.getNewPanelType();
-                        		//System.out.println(panelType);
+                        		
                         		if(!(panelType.equals(Panel.IDLE)))
                         		{
-                        			//System.out.println(panelType + " equals Panel.IDLE");
                         			containerPanel.remove(stuffPanel);
                         			repaint();
                         			
@@ -56,12 +50,10 @@ public class CourseNet extends JApplet {
                         			
                         			containerPanel.add(stuffPanel);
                         			repaint();
-                        			//stuffPanel.resetNewPanelType();
                         		}
                         		try {
 									Thread.sleep(500);
 								} catch (InterruptedException e) {
-									// TODO Auto-generated catch block
 									e.printStackTrace();
 								}
                         	}
