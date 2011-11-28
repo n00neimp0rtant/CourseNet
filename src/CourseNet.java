@@ -24,54 +24,6 @@ public class CourseNet extends JApplet {
             SwingUtilities.invokeAndWait(new Runnable() {
                 public void run() {
                     createGUI();
-                    //createWatchdog();
-                    //panelWatchdog.start();
-                    
-                    /*new Thread(
-                    		new Runnable() {
-                                public void run() {
-                                	while(true)
-                                	{
-                            			if(stuffPanel.getNewPanelType() == Panel.BLANK)
-                                		{
-                                			containerPanel.remove(stuffPanel);
-                                			repaint();
-                                			stuffPanel = new ContentPanel();
-                                			containerPanel.add(stuffPanel);
-                                			repaint();
-                                			stuffPanel.resetNewPanelType();
-                                		}
-                            			else if(stuffPanel.getNewPanelType() == Panel.LOGIN)
-                                		{
-                                			containerPanel.remove(stuffPanel);
-                                			repaint();
-                                			stuffPanel = new LoginPanel();
-                                			containerPanel.add(stuffPanel);
-                                			repaint();
-                                			stuffPanel.resetNewPanelType();
-                                		}
-                            			else if(stuffPanel.getNewPanelType() == Panel.COURSES)
-                                		{
-                                			containerPanel.remove(stuffPanel);
-                                			repaint();
-                                			stuffPanel = new CoursesPanel();
-                                			containerPanel.add(stuffPanel);
-                                			repaint();
-                                			stuffPanel.resetNewPanelType();
-                                		}
-                            			else if(stuffPanel.getNewPanelType() == Panel.CALENDAR)
-                                		{
-                                			containerPanel.remove(stuffPanel);
-                                			repaint();
-                                			stuffPanel = new CalendarPanel();
-                                			containerPanel.add(stuffPanel);
-                                			repaint();
-                                			stuffPanel.resetNewPanelType();
-                                		}
-                                	}
-                                }
-                            }
-                    ).start();*/
                     new Thread(
             		new Runnable() {
                         public void run() {
@@ -107,7 +59,7 @@ public class CourseNet extends JApplet {
                         			//stuffPanel.resetNewPanelType();
                         		}
                         		try {
-									Thread.sleep(4000);
+									Thread.sleep(500);
 								} catch (InterruptedException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
@@ -122,60 +74,10 @@ public class CourseNet extends JApplet {
         }
     }
     
-    private void createWatchdog()
-    {
-    	panelWatchdog = new Thread(
-        		new Runnable() {
-                    public void run() {
-                    	while(true)
-                    	{
-                			if(stuffPanel.getNewPanelType() == Panel.BLANK)
-                    		{
-                    			containerPanel.remove(stuffPanel);
-                    			repaint();
-                    			stuffPanel = new ContentPanel();
-                    			containerPanel.add(stuffPanel);
-                    			repaint();
-                    			stuffPanel.resetNewPanelType();
-                    		}
-                			else if(stuffPanel.getNewPanelType() == Panel.LOGIN)
-                    		{
-                    			containerPanel.remove(stuffPanel);
-                    			repaint();
-                    			stuffPanel = new LoginPanel();
-                    			containerPanel.add(stuffPanel);
-                    			repaint();
-                    			stuffPanel.resetNewPanelType();
-                    		}
-                			else if(stuffPanel.getNewPanelType() == Panel.COURSES)
-                    		{
-                    			containerPanel.remove(stuffPanel);
-                    			repaint();
-                    			stuffPanel = new CoursesPanel();
-                    			containerPanel.add(stuffPanel);
-                    			repaint();
-                    			stuffPanel.resetNewPanelType();
-                    		}
-                			else if(stuffPanel.getNewPanelType() == Panel.CALENDAR)
-                    		{
-                    			containerPanel.remove(stuffPanel);
-                    			repaint();
-                    			stuffPanel = new CalendarPanel();
-                    			containerPanel.add(stuffPanel);
-                    			repaint();
-                    			stuffPanel.resetNewPanelType();
-                    		}
-                    	}
-                    }
-                }
-        );
-    	panelWatchdog.start();
-    }
-    
     private void createGUI()
     {
         //Create and set up the content pane.
-		Image image = getImage(getCodeBase(), "http://f.cl.ly/items/3Z2G0N1v2o2X2D433728/green-blank-blackboard-small.jpg");
+		Image image = getToolkit().getImage("../background.jpg");
 		containerPanel = new ImagePanel(image);
 		containerPanel.setPreferredSize(new Dimension(970, 678));
 		

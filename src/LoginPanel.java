@@ -14,7 +14,7 @@ public class LoginPanel extends ContentPanel
 	{
 		setLayout(null);
 		setOpaque(false);
-		setSize(new Dimension(970, 678));
+		setSize(new Dimension(970, 680));
 		// title
 		title = new JLabel("CourseNet");
 		title.setFont(new Font("Arial Black", Font.PLAIN, 72));

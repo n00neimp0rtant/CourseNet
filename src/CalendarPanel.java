@@ -1,14 +1,6 @@
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
 
 public class CalendarPanel extends ContentPanel
 {
@@ -19,7 +11,7 @@ public class CalendarPanel extends ContentPanel
 	{
 		setLayout(null);
 		setOpaque(false);
-		setSize(new Dimension(970, 678));
+		setSize(new Dimension(970, 680));
 		
 		title = new JLabel("Calendar");
 		title.setFont(new Font("Arial Black", Font.PLAIN, 72));
