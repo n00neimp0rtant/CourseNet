@@ -267,7 +267,7 @@ public class CoursesPanel extends ContentPanel
 					c.name = JOptionPane.showInputDialog("Enter the name of your new course");
 					c.number = JOptionPane.showInputDialog("Enter the course number");
 					//c.description = JOptionPane.showInputDialog("Enter course description");
-					c.location = JOptionPane.showInputDialog("Enter location");
+					//c.location = JOptionPane.showInputDialog("Enter location");
 					c.time = JOptionPane.showInputDialog("Enter the class time");
 					CourseNet.myDb.createCourse(c, CourseNet.username);
 				}

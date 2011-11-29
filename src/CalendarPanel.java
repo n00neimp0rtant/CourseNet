@@ -13,7 +13,6 @@ public class CalendarPanel extends ContentPanel
 	public JLabel currentDate;
 	public JButton loginButton, coursesButton, calendarButton;
 	public JButton[] detailButtons;
-	public JButton addButton;
 	public JLabel[] dates, titles, descs;
 	public ArrayList<Event> events;
 	public Event[] eventsToDisplay;
@@ -152,11 +151,9 @@ public class CalendarPanel extends ContentPanel
 			if (events.size() <= i+offset) break;
 			int x = 100;
 			Event e = events.get(i+offset);
-			if (editing) detailButtons[i] = new JButton("X");
-			else detailButtons[i] = new JButton("+");
+			detailButtons[i] = new JButton("+");
 			detailButtons[i].addActionListener(l);
-			if (editing) detailButtons[i].setToolTipText("Remove this event");
-			else detailButtons[i].setToolTipText("See more event details");
+			detailButtons[i].setToolTipText("See more event details");
 			detailButtons[i].setBounds(x, y+10, 20, 20);
 			add(detailButtons[i]);
 			x+=25;
@@ -189,29 +186,11 @@ public class CalendarPanel extends ContentPanel
 		{
 			JButton theButton = (JButton)e.getSource();
 
-			if (theButton.equals(addButton))
-			{
-				// Needs to be replaced with actual new event getting.
-				Event newEvent = new Event();
-				newEvent.date = JOptionPane.showInputDialog("Enter the date of your new event");
-				newEvent.title = JOptionPane.showInputDialog("Enter the title of your new event");
-				newEvent.description = JOptionPane.showInputDialog("Enter a description of your new event");
-				events.add(newEvent);
-				addEvents();
-				return;
-			}
-
 			for (int i=0; i < detailButtons.length; i++)
 			{
 				if (detailButtons[i].equals(theButton))
 				{
-					if (theButton.getText().equals("X"))
-					{
-						events.remove(i+offset);
-						addEvents();
-					}
-					
-					else new EventPopup(eventsToDisplay[i]);
+					new EventPopup(eventsToDisplay[i]);
 
 					break;
 				}
