@@ -88,8 +88,8 @@ public class CourseNet extends JApplet {
     {
     	myDb = new myDatabase();
     	myDb.connect("jdbc:mysql://localhost/coursenet");
-    	//myDb.init();
-    	//myDb.dropTables();
-    	//myDb.createTables();
+    	myDb.dropTables();
+    	myDb.createTables();
+    	myDb.init();
     }
 }

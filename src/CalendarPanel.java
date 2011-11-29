@@ -182,11 +182,13 @@ public class CalendarPanel extends ContentPanel
 		if (addButton != null) addButton.setVisible(false);
 		if (editing)
 		{
+			System.out.println("Editing...");
 			addButton = new JButton("Add New Event");
 			addButton.addActionListener(l);
 			addButton.setBounds(150, 600, addButton.getPreferredSize().width, addButton.getPreferredSize().height);
 			add(addButton);
 		}
+		repaint();
 	}
 
 	class DetailsListener implements ActionListener

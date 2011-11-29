@@ -4,6 +4,7 @@
 // imports
 import java.sql.*;
 import java.util.*;
+import java.io.*;
 
 public class myDatabase 
 {	
@@ -90,6 +91,112 @@ public class myDatabase
 					"username char(40), title char(40), description char(100), date char(40))");
 			
 		} catch (SQLException e) {System.out.println("Creation failed: " + e);}
+	}
+	
+	// initialize the database and tables with values
+	public void init() 
+	{
+		String s;
+		File f;
+		Scanner sc;
+		
+		String line;
+		String[] data;
+		Course c;
+		
+		try {
+			// read file, send to database
+			// students
+			f = new File("students.txt");
+			sc = new Scanner(f);
+			while (sc.hasNextLine())
+			{
+				line = sc.nextLine();
+				data = line.split(",");
+				sendQuery("insert into Students (name, username, password, email) values " +
+						"('" + data[0] + "', '" + data[1] + "', '" + data[2] + "', '" + data[3] + "')");
+			}
+		
+			// teachers
+			f = new File("teachers.txt");
+			sc = new Scanner(f);
+			while (sc.hasNextLine())
+			{
+				line = sc.nextLine();
+				data = line.split(",");
+				sendQuery("insert into Teachers (name, username, password, email) values " +
+						"('" + data[0] + "', '" + data[1] + "', '" + data[2] + "', '" + data[3] + "')");
+			}
+		} catch (IOException e) {System.out.println("File reading failed: " + e);}
+		
+		// create some courses
+		c = new Course("CS 449", "Intro to Systems Software", "Learn basics of systems", "5502 Sennott Sq", 
+				"Tu/Th 3-4:15");
+		createCourse(c, "jmisurda");
+		addCourse(c, "jhenson");
+		addCourse(c, "jdl56");
+		addCourse(c, "cstick");
+		
+		c = new Course("CS 1530", "Software Engineering", "Learn the software development process with a term project",
+				"6113 Sennott Sq", "Tu/Th 4-5:15");
+		createCourse(c, "skchang");
+		addCourse(c, "jhenson");
+		addCourse(c, "jdl56");
+		addCourse(c, "cstick");
+		
+		c = new Course("CS 1550", "Operating Systems", "Learn the mechanisms of an operating system",
+				"5502 Sennott Sq", "Tu/Th 6-7:15");
+		createCourse(c, "jmisurda");
+		addCourse(c, "jhenson");
+		addCourse(c, "jdl56");
+		
+		c = new Course("ECE 1180", "Modeling the World", "Covers the basics of simulation using C and VPython",
+				"B11 Benedum", "Tu/Th 11-12:15");
+		createCourse(c, "levitan");
+		addCourse(c, "jhenson");
+		addCourse(c, "cstick");
+		
+		c = new Course("CS 1520", "Web Programming", "Students will learn the basics of WWW programming",
+				"5505 Sennott Sq", "M/W 1-2:15");
+		createCourse(c, "ramirez");
+		addCourse(c, "jdl56");
+		addCourse(c, "cstick");
+		
+		c = new Course("CS 1555", "Database Mgmt Systems", "Learn the basics of SQL and Oracle",
+				"201 Cathedral", "Th 6-8:30");
+		createCourse(c, "skchang");
+		addCourse(c, "jhenson");
+		addCourse(c, "jdl56");
+		addCourse(c, "cstick");
+		
+		// submit a discussion topic
+		Message m;
+		m = new Message();
+		m.username = "jhenson";
+		m.text = "This is just a test of the discussion board database.";
+		postMessage(c, m);
+		m = new Message();
+		m.username = "jhenson";
+		m.text = "This is an additionial test. I figured two was better than one.";
+		postMessage(c, m);
+		
+		// add events
+		Event e;
+		e = new Event();
+		e.title = "CS 1530 Final";
+		e.description = "1 hour final followed by a 10 minute project demo";
+		e.date = "12/12/11";
+		addEvent(e, "jhenson");
+		e = new Event();
+		e.title = "CS 1550 Final";
+		e.description = "75 minute final with a couple essays";
+		e.date = "12/15/11";
+		addEvent(e, "jhenson");
+		e = new Event();
+		e.title = "ECE 1150 Final";
+		e.description = "A long 2 hour final that will be hard";
+		e.date = "12/14/11";
+		addEvent(e, "jhenson");
 	}
 	
 	// send a query to the database
@@ -455,7 +562,7 @@ public class myDatabase
 			query = "select * from Enrollment where course_teacher='" + username + "'";
 			rs = s.executeQuery(query);
 			
-			rs.first();
+			//rs.first();
 			while (rs.next())
 			{
 				courseNames.add(numCourses, rs.getString("course_name"));

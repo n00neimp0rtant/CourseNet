@@ -66,7 +66,7 @@ public class LoginPanel extends ContentPanel
 		}
 		else
 		{
-			passwordLabel.setText("Invalid Password!");
+			passwordLabel.setText("Invalid!");
 			passwordLabel.setForeground(Color.red);
 		}
 	}
