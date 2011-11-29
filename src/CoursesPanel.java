@@ -7,7 +7,7 @@ public class CoursesPanel extends ContentPanel
 {
 	public JButton loginButton, coursesButton, calendarButton;
 	public JButton editButton, helpButton, addCourse;
-	public JButton[] assigButtons, gradeButtons, discussButtons, removeButtons;
+	public JButton[] eventsButtons, gradeButtons, discussButtons, removeButtons;
 	JLabel[] postings;
 	public ArrayList<Course> courses;
 	boolean editing;
@@ -113,7 +113,7 @@ public class CoursesPanel extends ContentPanel
 
 		int x = 85, y = 150;
 		postings = new JLabel[courses.size()];
-		assigButtons = new JButton[courses.size()];
+		eventsButtons = new JButton[courses.size()];
 		gradeButtons = new JButton[courses.size()];
 		discussButtons = new JButton[courses.size()];
 		removeButtons = new JButton[courses.size()];
@@ -137,10 +137,10 @@ public class CoursesPanel extends ContentPanel
 			time.setBounds(15, 50, time.getPreferredSize().width, time.getPreferredSize().height);
 			postings[i].add(time);
 
-			assigButtons[i] = new JButton("Assig");
-			assigButtons[i].setBounds(10, 150, 70, assigButtons[i].getPreferredSize().height);
-			assigButtons[i].addActionListener(l);
-			postings[i].add(assigButtons[i]);
+			eventsButtons[i] = new JButton("Events");
+			eventsButtons[i].setBounds(10, 150, 70, eventsButtons[i].getPreferredSize().height);
+			eventsButtons[i].addActionListener(l);
+			postings[i].add(eventsButtons[i]);
 
 			gradeButtons[i] = new JButton("Grades");
 			gradeButtons[i].setBounds(90, 150, 70, gradeButtons[i].getPreferredSize().height);
@@ -186,11 +186,11 @@ public class CoursesPanel extends ContentPanel
 		{
 			JButton button = (JButton)event.getSource();
 
-			if (button.getText().equals("Assig"))
+			if (button.getText().equals("Events"))
 			{
-				for (int i=0; i < assigButtons.length; i++)
+				for (int i=0; i < eventsButtons.length; i++)
 				{
-					if (assigButtons[i].equals(button))
+					if (eventsButtons[i].equals(button))
 					{
 						new Assignments(courses.get(i));
 						break;
