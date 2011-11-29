@@ -30,4 +30,8 @@ public class Course {
 		time = t;
 	}
 	
+	public String toString()
+	{
+		return number;
+	}
 }

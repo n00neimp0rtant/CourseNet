@@ -61,6 +61,7 @@ public class CoursesPanel extends ContentPanel
 					editButton.setText("Edit Courses");
 					editButton.setSelected(false);
 					addCourse.setVisible(false);
+					addCourse = null;
 					addCoursePostings();
 				}
 				else
@@ -86,31 +87,16 @@ public class CoursesPanel extends ContentPanel
 
 		/* Course Information */
 		// Get the list of the student's courses, and make the courses array
-		courses = new ArrayList<Course>();
-		ArrayList<Course> myCourses;
 		if (CourseNet.isStudent)
 		{
-			myCourses = CourseNet.myDb.viewStudentCourses(CourseNet.username);
+			courses = CourseNet.myDb.viewStudentCourses(CourseNet.username);
 		}
 		else
 		{
-			myCourses = CourseNet.myDb.viewTeacherCourses(CourseNet.username);
+			courses = CourseNet.myDb.viewTeacherCourses(CourseNet.username);
 		}
-			
-		for (int i = 0; i < myCourses.size(); i++)
-		{
-			// add users current courses to array list
-			courses.add(i, new Course());
-			
-			// pull information from viewStudentCourses
-			// loop through all courses
-			courses.get(i).name = myCourses.get(i).name;
-			courses.get(i).teacher = myCourses.get(i).teacher;
-			courses.get(i).time = myCourses.get(i).time;
-		}
-
+		
 		addCoursePostings();
-
 	}
 
 	private void addCoursePostings()
@@ -139,14 +125,15 @@ public class CoursesPanel extends ContentPanel
 			add(postings[i]);
 
 			// Basic Course Info
-			JLabel courseTitle = new JLabel(courses.get(i).name);
+			Course c = courses.get(i);
+			JLabel courseTitle = new JLabel(c.name);
 			courseTitle.setFont(new Font("Arial Black", Font.PLAIN, 14));
 			courseTitle.setBounds(10, 10, courseTitle.getPreferredSize().width, courseTitle.getPreferredSize().height);
 			postings[i].add(courseTitle);
-			JLabel prof = new JLabel(courses.get(i).teacher);
+			JLabel prof = new JLabel(c.teacher);
 			prof.setBounds(15, 30, prof.getPreferredSize().width, prof.getPreferredSize().height);
 			postings[i].add(prof);
-			JLabel time = new JLabel(courses.get(i).time);
+			JLabel time = new JLabel(c.time);
 			time.setBounds(15, 50, time.getPreferredSize().width, time.getPreferredSize().height);
 			postings[i].add(time);
 
@@ -182,12 +169,15 @@ public class CoursesPanel extends ContentPanel
 			}
 		}
 		if ((courses.size() < 6)  && editing)
-		{
+		{	
+			if (addCourse != null) addCourse.setVisible(false);
 			addCourse = new JButton("Add a Course");
+			addCourse.setVisible(true);
 			addCourse.setBounds(x+75, y+50, 150, 100);
 			addCourse.addActionListener(l);
 			add(addCourse);
 		}
+		repaint();
 	}
 	
 	class PostingListener implements ActionListener
@@ -256,28 +246,33 @@ public class CoursesPanel extends ContentPanel
 			}
 			if (button.getText().equals("Add a Course"))
 			{
-				Course c = new Course();
-				ArrayList<Course> courseList = new ArrayList<Course>();
+				Course c;
 				
-				// pick a new course
-				courseList = CourseNet.myDb.listOpenCourses();
-				// display them
-				
-				// if student, addCourse
 				if (CourseNet.isStudent)
 				{
+					ArrayList<Course> courseList = new ArrayList<Course>();
+					
+					// pick a new course
+					courseList = CourseNet.myDb.listOpenCourses();
+
+					// display them and get the student's choice
+					c = (Course) JOptionPane.showInputDialog(null, "Choose a course to add:",
+					        "Add Course", JOptionPane.QUESTION_MESSAGE, null, courseList.toArray(), null);
+					
 					CourseNet.myDb.addCourse(c, CourseNet.username);
 				}
 				else
 				{
+					c = new Course();
+					c.name = JOptionPane.showInputDialog("Enter the name of your new course");
+					c.number = JOptionPane.showInputDialog("Enter the course number");
+					//c.description = JOptionPane.showInputDialog("Enter course description");
+					c.location = JOptionPane.showInputDialog("Enter location");
+					c.time = JOptionPane.showInputDialog("Enter the class time");
 					CourseNet.myDb.createCourse(c, CourseNet.username);
 				}
 				
-				Course course = new Course();
-				course.name = course.number;
-				course.teacher = course.teacher;
-				course.time = course.time;
-				courses.add(course);
+				courses.add(c);
 				addCoursePostings();
 			}
 		}
