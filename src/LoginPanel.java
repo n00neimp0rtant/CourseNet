@@ -9,7 +9,7 @@ public class LoginPanel extends ContentPanel
 	public JTextField usernameField;
 	public JPasswordField passwordField;
 	public JButton loginButton;
-
+	
 	public LoginPanel()
 	{
 		setLayout(null);
@@ -66,7 +66,7 @@ public class LoginPanel extends ContentPanel
 			}
 		});
 		add(centeredVersionOf(loginButton));
-
+		
 	}
 	public void getLoginResponse()
 	{
