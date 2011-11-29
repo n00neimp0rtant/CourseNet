@@ -3,7 +3,7 @@ import javax.swing.*;
 
 public class Grades extends JFrame
 {
-	Grades(CourseInfo course)
+	Grades(Course course)
 	{
 		super("Grades");
 		JTextArea text = new JTextArea();

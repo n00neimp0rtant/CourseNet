@@ -9,7 +9,7 @@ public class CoursesPanel extends ContentPanel
 	public JButton editButton, helpButton, addCourse;
 	public JButton[] assigButtons, gradeButtons, discussButtons, removeButtons;
 	JLabel[] postings;
-	public ArrayList<CourseInfo> courses;
+	public ArrayList<Course> courses;
 	boolean editing;
 
 	public CoursesPanel()
@@ -86,15 +86,28 @@ public class CoursesPanel extends ContentPanel
 
 		/* Course Information */
 		// Get the list of the student's courses, and make the courses array
-		courses = new ArrayList<CourseInfo>();
-		for (int i = 0; i < 4; i++)
+		courses = new ArrayList<Course>();
+		ArrayList<Course> myCourses;
+		if (CourseNet.isStudent)
 		{
-			courses.add(i, new CourseInfo());
-			courses.get(i).className = "Course Name";
-			courses.get(i).profName = "John Smith";
-			courses.get(i).meetTime = "MWF 9 - 9:50";
+			myCourses = CourseNet.myDb.viewStudentCourses(CourseNet.username);
 		}
-		// Fix the above.
+		else
+		{
+			myCourses = CourseNet.myDb.viewTeacherCourses(CourseNet.username);
+		}
+			
+		for (int i = 0; i < myCourses.size(); i++)
+		{
+			// add users current courses to array list
+			courses.add(i, new Course());
+			
+			// pull information from viewStudentCourses
+			// loop through all courses
+			courses.get(i).name = myCourses.get(i).name;
+			courses.get(i).teacher = myCourses.get(i).teacher;
+			courses.get(i).time = myCourses.get(i).time;
+		}
 
 		addCoursePostings();
 
@@ -126,14 +139,14 @@ public class CoursesPanel extends ContentPanel
 			add(postings[i]);
 
 			// Basic Course Info
-			JLabel courseTitle = new JLabel(courses.get(i).className);
+			JLabel courseTitle = new JLabel(courses.get(i).name);
 			courseTitle.setFont(new Font("Arial Black", Font.PLAIN, 14));
 			courseTitle.setBounds(10, 10, courseTitle.getPreferredSize().width, courseTitle.getPreferredSize().height);
 			postings[i].add(courseTitle);
-			JLabel prof = new JLabel(courses.get(i).profName);
+			JLabel prof = new JLabel(courses.get(i).teacher);
 			prof.setBounds(15, 30, prof.getPreferredSize().width, prof.getPreferredSize().height);
 			postings[i].add(prof);
-			JLabel time = new JLabel(courses.get(i).meetTime);
+			JLabel time = new JLabel(courses.get(i).time);
 			time.setBounds(15, 50, time.getPreferredSize().width, time.getPreferredSize().height);
 			postings[i].add(time);
 
@@ -222,13 +235,17 @@ public class CoursesPanel extends ContentPanel
 				{
 					if (removeButtons[i].equals(button))
 					{
+						// if student, dropCourse
 						if (CourseNet.isStudent)
 						{
-							// Remove students from course
+							//System.out.println(courses.get(i).name);
+							CourseNet.myDb.dropCourse(courses.get(i), CourseNet.username);
 						}
-						else	// Professor
+						// if teacher, deleteCourse
+						else
 						{
-							// Remove course
+							//System.out.println(courses.get(i).name);
+							CourseNet.myDb.deleteCourse(courses.get(i));
 						}
 						courses.remove(i);
 						courses.trimToSize();
@@ -239,11 +256,28 @@ public class CoursesPanel extends ContentPanel
 			}
 			if (button.getText().equals("Add a Course"))
 			{
-				int i = courses.size();
-				courses.add(i, new CourseInfo());
-				courses.get(i).className = "New Class";
-				courses.get(i).profName = "This will have to do a lot more stuff";
-				courses.get(i).meetTime = "in order to actually add a course";
+				Course c = new Course();
+				ArrayList<Course> courseList = new ArrayList<Course>();
+				
+				// pick a new course
+				courseList = CourseNet.myDb.listOpenCourses();
+				// display them
+				
+				// if student, addCourse
+				if (CourseNet.isStudent)
+				{
+					CourseNet.myDb.addCourse(c, CourseNet.username);
+				}
+				else
+				{
+					CourseNet.myDb.createCourse(c, CourseNet.username);
+				}
+				
+				Course course = new Course();
+				course.name = course.number;
+				course.teacher = course.teacher;
+				course.time = course.time;
+				courses.add(course);
 				addCoursePostings();
 			}
 		}

@@ -4,7 +4,7 @@ import javax.swing.*;
 
 public class Assignments extends JFrame
 {
-	Assignments(CourseInfo course)
+	Assignments(Course course)
 	{
 		super("Assignments");
 		JTextArea text = new JTextArea();

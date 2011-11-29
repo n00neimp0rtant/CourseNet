@@ -69,21 +69,15 @@ public class CalendarPanel extends ContentPanel
 
 		// this needs to turn into getting actual events from the database
 		events = new ArrayList<Event>();
-		for (int i = 0; i < 21; i++)
+		ArrayList<Event> myEvents = new ArrayList<Event>();
+		myEvents = CourseNet.myDb.viewEvents(CourseNet.username);
+		for (int i = 0; i < myEvents.size(); i++)
 		{
 			events.add(i, new Event());
-			events.get(i).date = "0" + String.valueOf(i) + "/11/11";
-			if (i%2 == 0)
-				events.get(i).title = "Longer Title";
-			else
-				events.get(i).title = "Title";
-			events.get(i).description = "This is a very important event that you should go attend." + String.valueOf(i);
+			events.get(i).title = myEvents.get(i).title;
+			events.get(i).description = myEvents.get(i).description;
+			events.get(i).date = myEvents.get(i).date;
 		}
-		events.add(9, new Event());
-		events.get(9).date = "07/31/1992";
-		events.get(9).title = "Another Event That Is Even Longer";
-		events.get(9).description = "This description should be long enough to overflow the field width....";
-		// the above needs to be replaced
 		
 		Collections.sort(events);
 		offset = 0;
