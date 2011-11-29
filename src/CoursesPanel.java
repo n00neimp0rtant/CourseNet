@@ -5,7 +5,8 @@ import javax.swing.*;
 
 public class CoursesPanel extends ContentPanel
 {
-	public JButton loginButton, coursesButton, calendarButton, editButton, helpButton, addCourse;
+	public JButton loginButton, coursesButton, calendarButton;
+	public JButton editButton, helpButton, addCourse;
 	public JButton[] assigButtons, gradeButtons, discussButtons, removeButtons;
 	JLabel[] postings;
 	public ArrayList<CourseInfo> courses;
@@ -136,7 +137,7 @@ public class CoursesPanel extends ContentPanel
 			time.setBounds(15, 50, time.getPreferredSize().width, time.getPreferredSize().height);
 			postings[i].add(time);
 
-			assigButtons[i] = new JButton("Assignments");
+			assigButtons[i] = new JButton("Assig");
 			assigButtons[i].setBounds(10, 150, 70, assigButtons[i].getPreferredSize().height);
 			assigButtons[i].addActionListener(l);
 			postings[i].add(assigButtons[i]);
@@ -146,7 +147,7 @@ public class CoursesPanel extends ContentPanel
 			gradeButtons[i].addActionListener(l);
 			postings[i].add(gradeButtons[i]);
 
-			discussButtons[i] = new JButton("Discussion");
+			discussButtons[i] = new JButton("Talk");
 			discussButtons[i].setBounds(170, 150, 70, discussButtons[i].getPreferredSize().height);
 			discussButtons[i].addActionListener(l);
 			postings[i].add(discussButtons[i]);
@@ -182,7 +183,7 @@ public class CoursesPanel extends ContentPanel
 		{
 			JButton button = (JButton)event.getSource();
 
-			if (button.getText().equals("Assignments"))
+			if (button.getText().equals("Assig"))
 			{
 				for (int i=0; i < assigButtons.length; i++)
 				{
@@ -204,7 +205,7 @@ public class CoursesPanel extends ContentPanel
 					}
 				}
 			}
-			if (button.getText().equals("Discussion"))
+			if (button.getText().equals("Talk"))
 			{
 				for (int i=0; i < discussButtons.length; i++)
 				{
