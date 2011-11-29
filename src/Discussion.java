@@ -50,7 +50,7 @@ public class Discussion extends JFrame
 		postButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent event)
 			{
-				// Post to the discussion board--needs to store this string (somehow)
+				// Posting to the discussion board!
 				String s = newPost.getText();
 				Message m = new Message();
 				m.text = s;
