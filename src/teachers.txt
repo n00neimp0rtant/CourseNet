@@ -1,0 +1,4 @@
+S. K. Chang,skchang,chang,chang@cs.pitt.edu
+Jon Misurda,jmisurda,misurda,jmisurda@cs.pitt.edu
+Steve Levitan,levitan,levitan,levitan@pitt.edu
+John Ramirez,ramirez,ramirez,ramirez@cs.pitt.edu

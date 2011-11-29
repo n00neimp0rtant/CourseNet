@@ -1,0 +1,5 @@
+CS 1530,Software Engineering,Will discuss the basics of the software development process,6110 Sennott Square,TuTh 4-5:15,,,Open
+CS 1550,Intro to Operating Systems,Will cover the basics of an operating system,5502 Sennott Square,TuTh 6-7:15,,,Open
+ECE 1150,Wireless Computer Networks,Will discuss communications standards and practices,234 Benedum,W 12-2:25,,,Open
+ECE 1180,Modeling the World,Will cover different simulation and modeling strategies,B16 Benedum,TuTh 11-12:15,,,Open
+CS 1520,Web Programming,Covers the basic web languages and databases,5502 Sennott Square,TuTh 1-2:15,,,Open
