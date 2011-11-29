@@ -53,7 +53,8 @@ public class CourseNet extends JApplet {
                         			repaint();
                         		}
                         		try {
-									Thread.sleep(500);
+									Thread.sleep(100);
+									repaint();
 								} catch (InterruptedException e){
 									e.printStackTrace();
 								}

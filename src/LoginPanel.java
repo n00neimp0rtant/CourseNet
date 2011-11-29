@@ -31,6 +31,12 @@ public class LoginPanel extends ContentPanel
 		// username field
 		usernameField = new JTextField("");
 		usernameField.setBounds(0, 275, 200, usernameField.getPreferredSize().height);
+		usernameField.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent event)
+			{
+				getLoginResponse();
+			}
+		});
 		add(centeredVersionOf(usernameField));
 
 		// password label
@@ -42,6 +48,12 @@ public class LoginPanel extends ContentPanel
 		// password field
 		passwordField = new JPasswordField("");
 		passwordField.setBounds(0, 335, 200, passwordField.getPreferredSize().height);
+		passwordField.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent event)
+			{
+				getLoginResponse();
+			}
+		});
 		add(centeredVersionOf(passwordField));
 
 		// login button
