@@ -13,7 +13,7 @@ public class CourseNet extends JApplet {
 	public static boolean isStudent;
 	public static String username;
 	
-	public boolean testMode = true;
+	public boolean testMode = false;
 
 	//Called when this applet is loaded into the browser.
     public void init() {
@@ -23,12 +23,12 @@ public class CourseNet extends JApplet {
                 public void run() {
                     createGUI();
                     startDb();
-                    if(testMode)
+                    /*if(testMode)
             		{
             			((LoginPanel)stuffPanel).usernameField.setText("jhenson");
             			((LoginPanel)stuffPanel).passwordField.setText("kermit");
             			((LoginPanel)stuffPanel).getLoginResponse();	
-            		}
+            		}*/
                     new Thread(
             		new Runnable() {
                         public void run() {
@@ -84,8 +84,6 @@ public class CourseNet extends JApplet {
 		containerPanel.add(stuffPanel);
 
 		getContentPane().add(containerPanel);
-		
-		
     }
     
     // connects to database
