@@ -66,7 +66,6 @@ public class CalendarPanel extends ContentPanel
 		currentDate.setBounds(100, 100, currentDate.getPreferredSize().width, currentDate.getPreferredSize().height);
 		add(currentDate);
 
-		// this needs to turn into getting actual events from the database
 		events = new ArrayList<Event>();
 		ArrayList<Event> myEvents = new ArrayList<Event>();
 		myEvents = CourseNet.myDb.viewEvents(CourseNet.username);
