@@ -17,8 +17,6 @@ public class Grades extends JFrame
 			text.append("A+");
 			text.setEditable(false);
 			getContentPane().add(text);
-			setBounds(400, 100, 300, 500);
-			setVisible(true);
 		}
 		else
 		{
@@ -35,7 +33,7 @@ public class Grades extends JFrame
 			gradeReport.setLineWrap(true);
 			gradeReport.setWrapStyleWord(true);
 			JScrollPane scroll = new JScrollPane(gradeReport);
-			scroll.setPreferredSize(new Dimension(400, 400));
+			scroll.setPreferredSize(new Dimension(300, 300));
 			add(scroll);
 
 			JButton postButton = new JButton("Post Grade");
@@ -47,14 +45,15 @@ public class Grades extends JFrame
 					Message m = new Message();
 					m.text = s;
 					m.username = CourseNet.username;
-					CourseNet.myDb.postMessage(c, m);
+					//Send the grade to the database
 					JOptionPane.showMessageDialog(Grades.this, "Updated grade for student " + studentName);
 					Grades.this.dispose();
 				}
 			});
 			add(postButton, BorderLayout.PAGE_END);
-			setBounds(200, 100, 400, 500);
-			setVisible(true);
 		}
+		
+		setBounds(400, 100, 300, 400);
+		setVisible(true);
 	}
 }
