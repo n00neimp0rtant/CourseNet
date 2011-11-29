@@ -12,6 +12,7 @@ public class EventPopup extends JFrame
 		text.append(e.description);
 		text.setEditable(false);
 		text.setLineWrap(true);
+		text.setWrapStyleWord(true);
 		getContentPane().add(text);
 		setBounds(350, 100, 300, text.getPreferredSize().height+50);
 		setVisible(true);
