@@ -67,6 +67,7 @@ public class CalendarPanel extends ContentPanel
 		currentDate.setBounds(100, 100, currentDate.getPreferredSize().width, currentDate.getPreferredSize().height);
 		add(currentDate);
 
+		// this needs to turn into getting actual events from the database
 		events = new ArrayList<Event>();
 		for (int i = 0; i < 21; i++)
 		{
@@ -82,7 +83,8 @@ public class CalendarPanel extends ContentPanel
 		events.get(9).date = "07/31/1992";
 		events.get(9).title = "Another Event That Is Even Longer";
 		events.get(9).description = "This description should be long enough to overflow the field width....";
-
+		// the above needs to be replaced
+		
 		Collections.sort(events);
 		offset = 0;
 		dates = new JLabel[10];
