@@ -56,7 +56,6 @@ public class CourseNet extends JApplet {
                             			break;
                         			}
                         			
-                        			
                         			containerPanel.add(stuffPanel);
                         			repaint();
                         		}
