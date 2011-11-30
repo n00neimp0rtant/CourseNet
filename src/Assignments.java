@@ -11,7 +11,7 @@ public class Assignments extends JFrame
 	{
 		super("Assignments");
 
-		ArrayList<Event> assignments = CourseNet.myDb.viewCourseEvents(CourseNet.username);
+		ArrayList<Event> assignments = CourseNet.myDb.viewCourseEvents(course);
 
 		final JTextArea text = new JTextArea();
 		Collections.sort(assignments);
@@ -51,7 +51,6 @@ public class Assignments extends JFrame
 					assig.timeStamp = formatter.format(currentDate.getTime());
 					
 					//Send the event to the database
-					
 					JOptionPane.showMessageDialog(Assignments.this, "Posted new assignment");
 					Assignments.this.dispose();
 				}
