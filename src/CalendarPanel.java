@@ -73,7 +73,7 @@ public class CalendarPanel extends ContentPanel
 		myEvents = CourseNet.myDb.viewAllEvents(CourseNet.username);
 		for (int i = 0; i < myEvents.size(); i++)
 		{
-			events.add(i, new Event());
+			events.add(new Event());
 			events.get(i).title = myEvents.get(i).title;
 			events.get(i).description = myEvents.get(i).description;
 			events.get(i).date = myEvents.get(i).date;

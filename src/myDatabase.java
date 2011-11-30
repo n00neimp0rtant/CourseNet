@@ -54,7 +54,7 @@ public class myDatabase
 			s.executeUpdate("drop table if exists Courses");
 			s.executeUpdate("drop table if exists Enrollment");
 			s.executeUpdate("drop table if exists Discussion");
-			s.executeUpdate("drop table if exists Documents");
+			s.executeUpdate("drop table if exists Grades");
 			s.executeUpdate("drop table if exists Events");
 		} catch (SQLException e) {}
 	}
@@ -83,12 +83,12 @@ public class myDatabase
 			// discussion
 			s.executeUpdate("create table Discussion (id int unsigned not null auto_increment PRIMARY KEY, "
 					+ "course_name char(40), user char(40), text char(100))");
-			// documents
-			s.executeUpdate("create table Documents (id int unsigned not null auto_increment PRIMARY KEY, "
-					+ "doc_name char(40), course_name char(40))");
+			// grades
+			s.executeUpdate("create table Grades (id int unsigned not null auto_increment PRIMARY KEY, "
+					+ "username char(40), course_name char(40), grade char(5))");
 			// events
 			s.executeUpdate("create table Events (id int unsigned not null auto_increment PRIMARY KEY, " +
-					"username char(40), title char(40), description char(100), date char(40))");
+					"course_name char(40), title char(40), description char(100), date char(40), timestamp char(40))");
 			
 		} catch (SQLException e) {System.out.println("Creation failed: " + e);}
 	}
@@ -186,16 +186,19 @@ public class myDatabase
 		e.title = "CS 1530 Final";
 		e.description = "1 hour final followed by a 10 minute project demo";
 		e.date = "12/12/11";
+		e.timeStamp = "timeStamp";
 		addEvent(e, c);
 		e = new Event();
 		e.title = "CS 1550 Final";
 		e.description = "75 minute final with a couple essays";
 		e.date = "12/15/11";
+		e.timeStamp = "timeStamp";
 		addEvent(e, c);
 		e = new Event();
 		e.title = "ECE 1150 Final";
 		e.description = "A long 2 hour final that will be hard";
 		e.date = "12/14/11";
+		e.timeStamp = "timeStamp";
 		addEvent(e, c);
 	}
 	
@@ -603,8 +606,9 @@ public class myDatabase
 		try {
 			s = conn.createStatement();
 			
-			query = "insert into Events (course_name, title, description, date) values " +
-					"('" + c.name + "', '" + e.title + "', '" + e.description + "', '" + e.date + "')";
+			query = "insert into Events (course_name, title, description, date, timestamp) values " +
+					"('" + c.name + "', '" + e.title + "', '" + e.description + "', '" + e.date + "', '" +
+							e.timeStamp + "')";
 			s.executeUpdate(query);
 			
 		} catch (SQLException ex) {System.out.println("Event add failed: " + ex);}
@@ -626,6 +630,7 @@ public class myDatabase
 				temp.title = rs.getString("title");
 				temp.description = rs.getString("description");
 				temp.date = rs.getString("date");
+				temp.timeStamp = rs.getString("timestamp");
 				events.add(temp);
 			}
 			
@@ -673,6 +678,7 @@ public class myDatabase
 					temp.title = rs.getString("title");
 					temp.date = rs.getString("date");
 					temp.description = rs.getString("description");
+					temp.timeStamp = rs.getString("timestamp");
 					eventList.add(temp);
 				}
 			}
@@ -718,6 +724,34 @@ public class myDatabase
 			return messages;
 			
 		} catch (SQLException e) {System.out.println("View message failure: " + e); return null;}
+	}
+	
+	// add a new grade
+	public void addGrade(String username, String grade, Course c)
+	{
+		try {
+			s = conn.createStatement();
+			
+			query = "insert into Grades (username, course_name, grade) values ('" +
+				username + "', '" + c.name + "', '" + grade +"'";
+			s.executeUpdate(query);
+		} catch (SQLException e) {System.out.println("Add grade failed: " + e); }
+	}
+	
+	// view a student's grades
+	public String viewGrade(String username, Course c)
+	{
+		String grade;
+		try {
+			s = conn.createStatement();
+			
+			query = "select * from Grades where username='" + username + "' AND '" + c.name + "'";
+			rs = s.executeQuery(query);
+			rs.first();
+			grade = rs.getString("grade");
+			return grade;
+			
+		} catch (SQLException e) {System.out.println("Course view failed: " + e); return null;}
 	}
 }
 

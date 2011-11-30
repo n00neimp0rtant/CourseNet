@@ -1,3 +1,5 @@
 Jacob Lightner,jdl56,lightner,jdl56@pitt.edu
 Jim Henson,jhenson,kermit,henson@disney.com
 Chap Stick,cstick,balm,jdl56@pitt.edu
+Kyra Lee,kfl5,sunshine,kfl5@pitt.edu
+Bruce Wayne,wayne,batman,bruce@wayne.com
