@@ -18,15 +18,7 @@ public class Discussion extends JFrame
 		// This gets the previous discussion posts
 		final Course c;
 		c = course;
-		messages = new ArrayList<Message>();
-		ArrayList<Message> myMessages = new ArrayList<Message>();
-		myMessages = CourseNet.myDb.viewMessages(course);
-		for(int i = 0; i < myMessages.size(); i++)
-		{
-			messages.add(i, new Message());
-			messages.get(i).text = myMessages.get(i).text;
-			messages.get(i).username = myMessages.get(i).username;
-		}
+		messages = CourseNet.myDb.viewMessages(course);
 
 		final JTextArea text = new JTextArea();
 		for (Message m : messages)

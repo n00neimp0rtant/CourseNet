@@ -29,10 +29,15 @@ public class Assignments extends JFrame
 		text.setEditable(false);
 		
 
-		if (CourseNet.isStudent) add(text);
+		if (CourseNet.isStudent)
+		{
+			add(text);		
+		}
 		
 		else
 		{
+			final Course c;
+			c = course;
 			JButton postButton = new JButton("Post New Assignment");
 			postButton.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent event)
@@ -51,6 +56,7 @@ public class Assignments extends JFrame
 					assig.timeStamp = formatter.format(currentDate.getTime());
 					
 					//Send the event to the database
+					CourseNet.myDb.addEvent(assig, c);
 					
 					JOptionPane.showMessageDialog(Assignments.this, "Posted new assignment");
 					Assignments.this.dispose();

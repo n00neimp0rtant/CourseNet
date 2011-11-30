@@ -82,7 +82,7 @@ public class myDatabase
 				+ "course_name char(40), course_teacher char(40), roster char(200))");
 			// discussion
 			s.executeUpdate("create table Discussion (id int unsigned not null auto_increment PRIMARY KEY, "
-					+ "course_name char(40), user char(40), text char(100))");
+					+ "course_name char(40), user char(40), text char(100), timestamp char(40))");
 			// grades
 			s.executeUpdate("create table Grades (id int unsigned not null auto_increment PRIMARY KEY, "
 					+ "username char(40), course_name char(40), grade char(40))");
@@ -685,8 +685,8 @@ public class myDatabase
 		try {
 			s = conn.createStatement();
 			
-			query = "insert into Discussion (course_name, user, text) values ('" + c.name + "', '" +
-					m.username + "', '" + m.text + "')";
+			query = "insert into Discussion (course_name, user, text, timestamp) values ('" + c.name + "', '" +
+					m.username + "', '" + m.text + "', '" + m.timeStamp + "')";
 			s.executeUpdate(query);
 			
 		} catch (SQLException e) {System.out.println("Post message failed: " + e);}
@@ -709,6 +709,7 @@ public class myDatabase
 				temp = new Message();
 				temp.text = rs.getString("text");
 				temp.username = rs.getString("user");
+				temp.timeStamp = rs.getString("timestamp");
 				messages.add(temp);
 			}
 			
