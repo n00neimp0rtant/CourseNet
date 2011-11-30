@@ -65,7 +65,7 @@ public class CalendarPanel extends ContentPanel
 		add(dateToDisplay);
 
 		// Getting events to display
-		events = CourseNet.myDb.viewEvents(CourseNet.username);
+		events = CourseNet.myDb.viewAllEvents(CourseNet.username);
 		
 		Collections.sort(events);
 		offset = 0;

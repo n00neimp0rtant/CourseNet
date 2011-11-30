@@ -1,4 +1,4 @@
 
 public class Message {
-	String text, username;
+	String text, username, timeStamp;
 }

@@ -11,7 +11,7 @@ public class Assignments extends JFrame
 	{
 		super("Assignments");
 
-		ArrayList<Event> assignments = CourseNet.myDb.viewEvents(CourseNet.username);
+		ArrayList<Event> assignments = CourseNet.myDb.viewCourseEvents(CourseNet.username);
 
 		final JTextArea text = new JTextArea();
 		Collections.sort(assignments);
@@ -33,27 +33,23 @@ public class Assignments extends JFrame
 		
 		else
 		{
-			add(text, BorderLayout.NORTH);
-			final Course c = course;
-			final JTextArea assignment = new JTextArea();
-			assignment.setLineWrap(true);
-			assignment.setWrapStyleWord(true);
-			JScrollPane scroll = new JScrollPane(assignment);
-			scroll.setPreferredSize(new Dimension(300, 300));
-			add(scroll);
-
-			JButton postButton = new JButton("Post Assignment");
+			JButton postButton = new JButton("Post New Assignment");
 			postButton.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent event)
 				{
 					// Posting the event
-					String s = assignment.getText();
 					Event assig = new Event();
-					assig.title = s;
+					
+					assig.date = JOptionPane.showInputDialog("Enter the date of this assignment");
+					
+					assig.title = JOptionPane.showInputDialog("Enter the title of this assignment");
+					
+					assig.description = JOptionPane.showInputDialog("Enter a description of this assignment");
+					
 					Calendar currentDate = Calendar.getInstance();
 					SimpleDateFormat formatter=  new SimpleDateFormat("yyyy.MM.dd @ HH:mm:SSS");
 					assig.timeStamp = formatter.format(currentDate.getTime());
-					System.out.println(assig.timeStamp);
+					
 					//Send the event to the database
 					JOptionPane.showMessageDialog(Assignments.this, "Posted new assignment");
 					Assignments.this.dispose();
