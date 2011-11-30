@@ -10,12 +10,16 @@ public class Grades extends JFrame
 	{
 		super("Grades");
 		
+		String currGrade;
+		
 		if (CourseNet.isStudent)
 		{
-			JTextArea text = new JTextArea();
-			text.append(CourseNet.myDb.viewGrade(CourseNet.username, course));
-			text.setEditable(false);
-			getContentPane().add(text);
+			JTextArea grade = new JTextArea();
+			grade.append(CourseNet.myDb.viewGrade(CourseNet.username, course));
+			grade.setEditable(false);
+			JScrollPane scroll = new JScrollPane(grade);
+			scroll.setPreferredSize(new Dimension(300, 400));
+			add(grade);
 		}
 		else
 		{
@@ -27,7 +31,7 @@ public class Grades extends JFrame
 			
 			// Print that student's current grade report here and allow it to be edited
 			final Course c = course;
-			String currGrade = CourseNet.myDb.viewGrade(studentName, c);
+			currGrade = CourseNet.myDb.viewGrade(studentName, c);
 			final JTextArea gradeReport = new JTextArea(currGrade);
 			gradeReport.setLineWrap(true);
 			gradeReport.setWrapStyleWord(true);
