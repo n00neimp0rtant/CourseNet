@@ -18,23 +18,17 @@ public class Assignments extends JFrame
 		for (Event e : assignments)
 		{
 			// Posting messages with a timestamp signature
-			text.append(e.title + "\nPosted on: " + e.timeStamp + "\n---\n");
+			text.append(e.date + ": " + e.title + "\n" + e.description + "\nPosted on: " + e.timeStamp + "\n---\n");
 		}
 		text.setLineWrap(true);
 		text.setWrapStyleWord(true);
 		text.setEditable(false);
 		JScrollPane scrollText = new JScrollPane(text);
-		scrollText.setPreferredSize(new Dimension(400, 250));
+		scrollText.setPreferredSize(new Dimension(300, 350));
 		add(scrollText, BorderLayout.PAGE_START);
-		text.setEditable(false);
-		
 
-		if (CourseNet.isStudent)
-		{
-			add(text);		
-		}
 		
-		else
+		if (!CourseNet.isStudent)
 		{
 			final Course c;
 			c = course;
