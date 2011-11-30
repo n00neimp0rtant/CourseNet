@@ -24,7 +24,7 @@ public class Discussion extends JFrame
 		for (Message m : messages)
 		{
 			// Posting messages with a username signature
-			text.append(m.text + "\nSent by: " + m.username + "\t on " + m.timeStamp + "\n---\n");
+			text.append(m.text + "\nSent by: " + m.username + " on " + m.timeStamp + "\n---\n");
 		}
 		text.setLineWrap(true);
 		text.setWrapStyleWord(true);
@@ -53,7 +53,7 @@ public class Discussion extends JFrame
 				SimpleDateFormat formatter=  new SimpleDateFormat("yyyy.MM.dd @ HH:mm:SSS");
 				m.timeStamp = formatter.format(currentDate.getTime());
 				CourseNet.myDb.postMessage(c, m);
-				text.append(s + "\nSent by: " + CourseNet.username + "\n---\n");
+				text.append(s + "\nSent by: " + CourseNet.username + " on " + m.timeStamp + "\n---\n");
 				newPost.setText("");
 			}
 		});
