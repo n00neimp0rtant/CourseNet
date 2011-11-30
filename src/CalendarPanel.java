@@ -1,15 +1,12 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.text.*;
 import java.util.*;
+
 import javax.swing.*;
 
 public class CalendarPanel extends ContentPanel
 {
-	final static public String[] week = {" ", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
-		"Friday", "Saturday"};
-	final static public String[] month = {"January", "February", "March", "April", "May", "June", "July",
-		"August", "September", "October", "November", "December"};
-	public Calendar date;
 	public JLabel currentDate;
 	public JButton loginButton, coursesButton, calendarButton;
 	public JButton[] detailButtons;
@@ -58,26 +55,17 @@ public class CalendarPanel extends ContentPanel
 		add(calendarButton);
 
 		// Displaying the current date
-		date = Calendar.getInstance();
-		currentDate = new JLabel(week[date.get(Calendar.DAY_OF_WEEK)] + ", " +
-				date.get(Calendar.DAY_OF_MONTH) + " " + month[date.get(Calendar.MONTH)] + " " +
-				date.get(Calendar.YEAR));
-		currentDate.setFont(new Font("Arial Black", Font.PLAIN, 32));
-		currentDate.setForeground(Color.white);
-		currentDate.setBounds(100, 100, currentDate.getPreferredSize().width, currentDate.getPreferredSize().height);
-		add(currentDate);
+		Calendar date = Calendar.getInstance();
+		SimpleDateFormat formatter=  new SimpleDateFormat("EEEE, dd MMMM yyyy");
+		String currentDate = formatter.format(date.getTime());
+		JLabel dateToDisplay = new JLabel(currentDate);
+		dateToDisplay.setFont(new Font("Arial Black", Font.PLAIN, 32));
+		dateToDisplay.setForeground(Color.white);
+		dateToDisplay.setBounds(100, 100, dateToDisplay.getPreferredSize().width, dateToDisplay.getPreferredSize().height);
+		add(dateToDisplay);
 
 		// Getting events to display
-		events = new ArrayList<Event>();
-		ArrayList<Event> myEvents = new ArrayList<Event>();
-		myEvents = CourseNet.myDb.viewEvents(CourseNet.username);
-		for (int i = 0; i < myEvents.size(); i++)
-		{
-			events.add(i, new Event());
-			events.get(i).title = myEvents.get(i).title;
-			events.get(i).description = myEvents.get(i).description;
-			events.get(i).date = myEvents.get(i).date;
-		}
+		events = CourseNet.myDb.viewEvents(CourseNet.username);
 		
 		Collections.sort(events);
 		offset = 0;
