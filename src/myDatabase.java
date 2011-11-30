@@ -19,7 +19,7 @@ public class myDatabase
 	// constructor
 	public myDatabase()
 	{
-		int e;
+	
 	}
 	
 	// connect method
@@ -186,17 +186,17 @@ public class myDatabase
 		e.title = "CS 1530 Final";
 		e.description = "1 hour final followed by a 10 minute project demo";
 		e.date = "12/12/11";
-		addEvent(e, "jhenson");
+		addEvent(e, c);
 		e = new Event();
 		e.title = "CS 1550 Final";
 		e.description = "75 minute final with a couple essays";
 		e.date = "12/15/11";
-		addEvent(e, "jhenson");
+		addEvent(e, c);
 		e = new Event();
 		e.title = "ECE 1150 Final";
 		e.description = "A long 2 hour final that will be hard";
 		e.date = "12/14/11";
-		addEvent(e, "jhenson");
+		addEvent(e, c);
 	}
 	
 	// send a query to the database
@@ -482,13 +482,6 @@ public class myDatabase
 		} catch (SQLException e) {System.out.println("Roster viewing failed: " + e); return null;}
 	}
 	
-	// submit homework
-	// just email it to teacher???
-	public void submitHomework(Course c, String username, String docName)
-	{
-		
-	}
-		
 	// return array of all students courses
 	public ArrayList<Course> viewStudentCourses(String username)
 	{
@@ -531,11 +524,6 @@ public class myDatabase
 				temp.description = rs.getString("description");
 				temp.location = rs.getString("location");
 				temp.time = rs.getString("time");
-				//line = rs.getString("assignments");
-				//if (line.length() > 0)
-				//	temp.assignments = line.split(",");
-				//else
-				//	temp.assignments = null;
 				myCourses.add(i, temp);
 			}
 			
@@ -610,36 +598,83 @@ public class myDatabase
 	}
 	
 	// add a new event
-	public void addEvent(Event e, String username)
+	public void addEvent(Event e, Course c)
 	{
 		try {
 			s = conn.createStatement();
 			
-			query = "insert into Events (username, title, description, date) values " +
-					"('" + username + "', '" + e.title + "', '" + e.description + "', '" + e.date + "')";
+			query = "insert into Events (course_name, title, description, date) values " +
+					"('" + c.name + "', '" + e.title + "', '" + e.description + "', '" + e.date + "')";
 			s.executeUpdate(query);
 			
 		} catch (SQLException ex) {System.out.println("Event add failed: " + ex);}
 	}
 	
-	// view all of users events
-	public ArrayList<Event> viewEvents(String username)
+	// view all of a course's events
+	public ArrayList<Event> viewCourseEvents(Course c)
 	{
-		ArrayList<Event> eventList = new ArrayList<Event>();
 		Event temp;
+		ArrayList<Event> events = new ArrayList<Event>();
 		try {
 			s = conn.createStatement();
 			
-			query = "select * from Events where username='" + username + "'";
+			query = "select * from Events where course_name='" + c.name + "'";
 			rs = s.executeQuery(query);
-			
 			while (rs.next())
 			{
 				temp = new Event();
 				temp.title = rs.getString("title");
 				temp.description = rs.getString("description");
 				temp.date = rs.getString("date");
-				eventList.add(temp);
+				events.add(temp);
+			}
+			
+			return events;
+			
+		} catch (SQLException e) {System.out.println("Failed course event view: " + e); return null;}
+	}
+	
+	// view all of user's events
+	public ArrayList<Event> viewAllEvents(String username)
+	{
+		ArrayList<Event> eventList = new ArrayList<Event>();
+		ArrayList<String> courseNames = new ArrayList<String>();
+		Event temp;
+		String line;
+		String[] names;
+		try {
+			s = conn.createStatement();
+			
+			query = "select * from Enrollment";
+			rs = s.executeQuery(query);
+			rs = s.executeQuery(query);
+			//rs.first();
+			while(rs.next())
+			{
+				line = rs.getString("roster");
+				names = line.split(",");
+				for (int i = 0; i < names.length; i++)
+				{
+					if (names[i].equals(username))
+					{
+						courseNames.add(rs.getString("course_name"));
+						i = 1000;
+					}
+				}
+			}
+			
+			for (int i = 0; i < courseNames.size(); i++)
+			{
+				query = "select * from Events where course_name='" + courseNames.get(i) + "'";
+				rs = s.executeQuery(query);
+				while (rs.next())
+				{
+					temp = new Event();
+					temp.title = rs.getString("title");
+					temp.date = rs.getString("date");
+					temp.description = rs.getString("description");
+					eventList.add(temp);
+				}
 			}
 			
 			return eventList;

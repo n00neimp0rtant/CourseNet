@@ -70,7 +70,7 @@ public class CalendarPanel extends ContentPanel
 		// Getting events to display
 		events = new ArrayList<Event>();
 		ArrayList<Event> myEvents = new ArrayList<Event>();
-		myEvents = CourseNet.myDb.viewEvents(CourseNet.username);
+		myEvents = CourseNet.myDb.viewAllEvents(CourseNet.username);
 		for (int i = 0; i < myEvents.size(); i++)
 		{
 			events.add(i, new Event());
