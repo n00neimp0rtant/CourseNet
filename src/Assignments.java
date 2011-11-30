@@ -24,7 +24,7 @@ public class Assignments extends JFrame
 		text.setWrapStyleWord(true);
 		text.setEditable(false);
 		JScrollPane scrollText = new JScrollPane(text);
-		scrollText.setPreferredSize(new Dimension(400, 250));
+		scrollText.setPreferredSize(new Dimension(300, 400));
 		add(scrollText, BorderLayout.PAGE_START);
 		text.setEditable(false);
 		
