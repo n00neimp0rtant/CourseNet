@@ -19,7 +19,7 @@ public class myDatabase
 	// constructor
 	public myDatabase()
 	{
-		
+		int e;
 	}
 	
 	// connect method
