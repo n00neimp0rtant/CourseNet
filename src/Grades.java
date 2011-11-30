@@ -13,22 +13,21 @@ public class Grades extends JFrame
 		if (CourseNet.isStudent)
 		{
 			JTextArea text = new JTextArea();
-			text.setFont(new Font("Arial Black", Font.PLAIN, 72));
-			text.append("A+");
+			text.append(CourseNet.myDb.viewGrade(CourseNet.username, course));
 			text.setEditable(false);
 			getContentPane().add(text);
 		}
 		else
 		{
 			// Get the student (user?)names from the database
-			String[] names = {"Jane", "John", "Joan"};
+			String[] names = CourseNet.myDb.viewRoster(course);
 			final String studentName = (String) JOptionPane.showInputDialog(null, "Choose a student to grade:",
 			        "Choose Student", JOptionPane.QUESTION_MESSAGE, null, names, null);
-			System.out.println(studentName);
+			//System.out.println(studentName);
 			
 			// Print that student's current grade report here and allow it to be edited
 			final Course c = course;
-			String currGrade = "A+";
+			String currGrade = CourseNet.myDb.viewGrade(studentName, c);
 			final JTextArea gradeReport = new JTextArea(currGrade);
 			gradeReport.setLineWrap(true);
 			gradeReport.setWrapStyleWord(true);
@@ -46,6 +45,7 @@ public class Grades extends JFrame
 					m.text = s;
 					m.username = CourseNet.username;
 					//Send the grade to the database
+					CourseNet.myDb.addGrade(studentName, s, c);
 					JOptionPane.showMessageDialog(Grades.this, "Updated grade for student " + studentName);
 					Grades.this.dispose();
 				}

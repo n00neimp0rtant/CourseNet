@@ -13,7 +13,7 @@ public class CourseNet extends JApplet {
 	public static boolean isStudent;
 	public static String username;
 
-	public boolean testMode = true;
+	public boolean testMode = false;
 
 	//Called when this applet is loaded into the browser.
 	public void init() {
