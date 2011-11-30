@@ -87,9 +87,9 @@ public class CalendarPanel extends ContentPanel
 		detailButtons = new JButton[10];
 
 		// Displaying events
-		addEvents();
+		displayEvents();
 
-		// See events that don't fit
+		// Button to see events that don't fit
 		JButton moreEvents = new JButton("See More Events");
 		moreEvents.setBounds(450, 600, moreEvents.getPreferredSize().width, moreEvents.getPreferredSize().height);
 		moreEvents.addActionListener(new ActionListener(){
@@ -97,13 +97,13 @@ public class CalendarPanel extends ContentPanel
 			{
 				offset += 10;
 				if (events.size() <= offset) offset = 0;
-				addEvents();
+				displayEvents();
 			}
 		});
 		add(moreEvents);
 	}
 
-	void addEvents()
+	void displayEvents()
 	{
 		if (eventsToDisplay != null)
 		{
@@ -162,14 +162,11 @@ public class CalendarPanel extends ContentPanel
 	{
 		public void actionPerformed(ActionEvent e)
 		{
-			JButton theButton = (JButton)e.getSource();
-
 			for (int i=0; i < detailButtons.length; i++)
 			{
-				if (detailButtons[i].equals(theButton))
+				if (detailButtons[i].equals(e.getSource()))
 				{
 					new EventPopup(eventsToDisplay[i]);
-
 					break;
 				}
 			}

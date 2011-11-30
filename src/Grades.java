@@ -26,7 +26,7 @@ public class Grades extends JFrame
 			        "Choose Student", JOptionPane.QUESTION_MESSAGE, null, names, null);
 			System.out.println(studentName);
 			
-			// Print that student's current grade report here
+			// Print that student's current grade report here and allow it to be edited
 			final Course c = course;
 			String currGrade = "A+";
 			final JTextArea gradeReport = new JTextArea(currGrade);
