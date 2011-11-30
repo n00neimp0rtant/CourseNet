@@ -85,7 +85,7 @@ public class myDatabase
 					+ "course_name char(40), user char(40), text char(100))");
 			// grades
 			s.executeUpdate("create table Grades (id int unsigned not null auto_increment PRIMARY KEY, "
-					+ "username char(40), course_name char(40), grade char(5))");
+					+ "username char(40), course_name char(40), grade char(40))");
 			// events
 			s.executeUpdate("create table Events (id int unsigned not null auto_increment PRIMARY KEY, " +
 					"course_name char(40), title char(40), description char(100), date char(40), timestamp char(40))");
@@ -472,16 +472,7 @@ public class myDatabase
 			String line = rs.getString("roster");
 			String[] usernames = line.split(",");
 			
-			String[] names = new String[usernames.length];
-			for (int i = 0; i < usernames.length; i++)
-			{
-				query = "select * from Students where username='" + usernames[i] + "'";
-				rs = s.executeQuery(query);
-				rs.first();
-				names[i] = rs.getString("name");
-			}
-			
-			return names;
+			return usernames;
 		} catch (SQLException e) {System.out.println("Roster viewing failed: " + e); return null;}
 	}
 	
@@ -532,7 +523,7 @@ public class myDatabase
 			
 			return myCourses;
 			
-		} catch (SQLException e) {System.out.println("Course view failed: " + e); return null;}
+		} catch (SQLException e) {System.out.println("Student course view failed: " + e); return null;}
 	}
 	
 	public ArrayList<Course> viewTeacherCourses(String username)
@@ -577,7 +568,7 @@ public class myDatabase
 			
 			return myCourses;
 			
-		} catch (SQLException e) {System.out.println("Course view failed: " + e); return null;}
+		} catch (SQLException e) {System.out.println("Teacher course view failed: " + e); return null;}
 	}
 	
 	// returns whether or not user is student
@@ -733,7 +724,7 @@ public class myDatabase
 			s = conn.createStatement();
 			
 			query = "insert into Grades (username, course_name, grade) values ('" +
-				username + "', '" + c.name + "', '" + grade +"'";
+				username + "', '" + c.name + "', '" + grade +"')";
 			s.executeUpdate(query);
 		} catch (SQLException e) {System.out.println("Add grade failed: " + e); }
 	}
@@ -745,13 +736,13 @@ public class myDatabase
 		try {
 			s = conn.createStatement();
 			
-			query = "select * from Grades where username='" + username + "' AND '" + c.name + "'";
+			query = "select * from Grades where username='" + username + "' AND course_name='" + c.name + "'";
 			rs = s.executeQuery(query);
 			rs.first();
 			grade = rs.getString("grade");
 			return grade;
 			
-		} catch (SQLException e) {System.out.println("Course view failed: " + e); return null;}
+		} catch (SQLException e) {/*System.out.println("Grade view failed: " + e);*/ return null;}
 	}
 }
 
