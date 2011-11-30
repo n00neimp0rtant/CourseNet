@@ -12,16 +12,27 @@ public class Assignments extends JFrame
 	{
 		super("Assignments");
 
-		if (CourseNet.isStudent)
-		{
+		/*
+		Events = new 
 			JTextArea text = new JTextArea();
-			text.setFont(new Font("Arial Black", Font.PLAIN, 18));
-			text.append("Due: ALL THE THINGS");
+			final JTextArea text = new JTextArea();
+			for (Event e : events)
+			{
+				// Posting messages with a username signature
+				text.append(m.text + "\nSent by: " + m.username + "\n---\n");
+			}
+			text.setLineWrap(true);
+			text.setWrapStyleWord(true);
 			text.setEditable(false);
-			getContentPane().add(text);
-		}
-		else
+			JScrollPane scrollText = new JScrollPane(text);
+			scrollText.setPreferredSize(new Dimension(400, 250));
+			add(scrollText, BorderLayout.PAGE_START);
+			text.setEditable(false);
+			getContentPane().add(text)
+		
+		if (!CourseNet.isStudent)
 		{
+			
 			final Course c = course;
 			final JTextArea assignment = new JTextArea();
 			assignment.setLineWrap(true);
@@ -45,7 +56,7 @@ public class Assignments extends JFrame
 				}
 			});
 			add(postButton, BorderLayout.PAGE_END);
-		}
+		}*/
 		
 		setBounds(400, 100, 300, 400);
 		setVisible(true);

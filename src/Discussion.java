@@ -29,7 +29,7 @@ public class Discussion extends JFrame
 		final JTextArea text = new JTextArea();
 		for (Message m : messages)
 		{
-			// Maybe we could even get a signature based on the username?
+			// Posting messages with a username signature
 			text.append(m.text + "\nSent by: " + m.username + "\n---\n");
 		}
 		text.setLineWrap(true);
