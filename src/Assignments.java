@@ -1,8 +1,7 @@
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
+import java.awt.event.*;
+import java.text.*;
+import java.util.*;
 
 import javax.swing.*;
 
@@ -12,52 +11,54 @@ public class Assignments extends JFrame
 	{
 		super("Assignments");
 
-		/*
-		Events = new 
-			JTextArea text = new JTextArea();
-			final JTextArea text = new JTextArea();
-			for (Event e : events)
-			{
-				// Posting messages with a username signature
-				text.append(m.text + "\nSent by: " + m.username + "\n---\n");
-			}
-			text.setLineWrap(true);
-			text.setWrapStyleWord(true);
-			text.setEditable(false);
-			JScrollPane scrollText = new JScrollPane(text);
-			scrollText.setPreferredSize(new Dimension(400, 250));
-			add(scrollText, BorderLayout.PAGE_START);
-			text.setEditable(false);
-			getContentPane().add(text)
-		
-		if (!CourseNet.isStudent)
-		{
-			
-			final Course c = course;
-			final JTextArea assignment = new JTextArea();
-			assignment.setLineWrap(true);
-			assignment.setWrapStyleWord(true);
-			JScrollPane scroll = new JScrollPane(assignment);
-			scroll.setPreferredSize(new Dimension(300, 300));
-			add(scroll);
+		ArrayList<Event> assignments = CourseNet.myDb.viewCourseEvents(CourseNet.username);
 
-			JButton postButton = new JButton("Post Assignment");
+		final JTextArea text = new JTextArea();
+		Collections.sort(assignments);
+		for (Event e : assignments)
+		{
+			// Posting messages with a timestamp signature
+			text.append(e.title + "\nPosted on: " + e.timeStamp + "\n---\n");
+		}
+		text.setLineWrap(true);
+		text.setWrapStyleWord(true);
+		text.setEditable(false);
+		JScrollPane scrollText = new JScrollPane(text);
+		scrollText.setPreferredSize(new Dimension(400, 250));
+		add(scrollText, BorderLayout.PAGE_START);
+		text.setEditable(false);
+		
+
+		if (CourseNet.isStudent) add(text);
+		
+		else
+		{
+			JButton postButton = new JButton("Post New Assignment");
 			postButton.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent event)
 				{
 					// Posting the event
-					String s = assignment.getText();
-					Message m = new Message();
-					m.text = s;
-					m.username = CourseNet.username;
-					//Send the grade to the database
+					Event assig = new Event();
+					
+					assig.date = JOptionPane.showInputDialog("Enter the date of this assignment");
+					
+					assig.title = JOptionPane.showInputDialog("Enter the title of this assignment");
+					
+					assig.description = JOptionPane.showInputDialog("Enter a description of this assignment");
+					
+					Calendar currentDate = Calendar.getInstance();
+					SimpleDateFormat formatter=  new SimpleDateFormat("yyyy.MM.dd @ HH:mm:SSS");
+					assig.timeStamp = formatter.format(currentDate.getTime());
+					
+					//Send the event to the database
+					
 					JOptionPane.showMessageDialog(Assignments.this, "Posted new assignment");
 					Assignments.this.dispose();
 				}
 			});
 			add(postButton, BorderLayout.PAGE_END);
-		}*/
-		
+		}
+
 		setBounds(400, 100, 300, 400);
 		setVisible(true);
 	}
