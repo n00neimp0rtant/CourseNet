@@ -70,17 +70,14 @@ public class LoginPanel extends ContentPanel
 	}
 	public void getLoginResponse()
 	{
-		System.out.print("responding: ");
 		CourseNet.username = usernameField.getText();
 		if(CourseNet.myDb.checkPassword(usernameField.getText(), String.valueOf(passwordField.getPassword())))
 		{
-			System.out.println("good");
 			CourseNet.isStudent = CourseNet.myDb.isStudent(CourseNet.username);
 			switchToPanel(Panel.COURSES);
 		}
 		else
 		{
-			System.out.println("bad");
 			passwordLabel.setText("Invalid!");
 			passwordLabel.setForeground(Color.red);
 		}
