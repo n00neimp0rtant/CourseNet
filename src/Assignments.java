@@ -51,6 +51,7 @@ public class Assignments extends JFrame
 					assig.timeStamp = formatter.format(currentDate.getTime());
 					
 					//Send the event to the database
+					
 					JOptionPane.showMessageDialog(Assignments.this, "Posted new assignment");
 					Assignments.this.dispose();
 				}
