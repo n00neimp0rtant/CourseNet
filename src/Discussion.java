@@ -13,7 +13,7 @@ public class Discussion extends JFrame
 		super("Discussion Board");
 		setLayout(new BorderLayout());
 
-		// This needs to get the previous discussion posts
+		// This gets the previous discussion posts
 		final Course c;
 		c = course;
 		messages = new ArrayList<Message>();

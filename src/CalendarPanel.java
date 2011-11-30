@@ -57,6 +57,7 @@ public class CalendarPanel extends ContentPanel
 		});
 		add(calendarButton);
 
+		// Displaying the current date
 		date = Calendar.getInstance();
 		currentDate = new JLabel(week[date.get(Calendar.DAY_OF_WEEK)] + ", " +
 				date.get(Calendar.DAY_OF_MONTH) + " " + month[date.get(Calendar.MONTH)] + " " +
@@ -66,7 +67,7 @@ public class CalendarPanel extends ContentPanel
 		currentDate.setBounds(100, 100, currentDate.getPreferredSize().width, currentDate.getPreferredSize().height);
 		add(currentDate);
 
-		// this needs to turn into getting actual events from the database
+		// Getting events to display
 		events = new ArrayList<Event>();
 		ArrayList<Event> myEvents = new ArrayList<Event>();
 		myEvents = CourseNet.myDb.viewEvents(CourseNet.username);
@@ -85,8 +86,10 @@ public class CalendarPanel extends ContentPanel
 		descs = new JLabel[10];
 		detailButtons = new JButton[10];
 
-		addEvents();
+		// Displaying events
+		displayEvents();
 
+		// Button to see events that don't fit
 		JButton moreEvents = new JButton("See More Events");
 		moreEvents.setBounds(450, 600, moreEvents.getPreferredSize().width, moreEvents.getPreferredSize().height);
 		moreEvents.addActionListener(new ActionListener(){
@@ -94,38 +97,13 @@ public class CalendarPanel extends ContentPanel
 			{
 				offset += 10;
 				if (events.size() <= offset) offset = 0;
-				addEvents();
+				displayEvents();
 			}
 		});
 		add(moreEvents);
-		if (!CourseNet.isStudent)
-		{
-			final JButton editButton = new JButton("Edit Events");
-			editButton.setBounds(750, 600, editButton.getPreferredSize().width, editButton.getPreferredSize().height);
-			editButton.addActionListener(new ActionListener(){
-				public void actionPerformed(ActionEvent event)
-				{
-					if (editButton.isSelected())
-					{
-						editing = false;
-						editButton.setText("Edit Events");
-						editButton.setSelected(false);
-						addEvents();
-					}
-					else
-					{
-						editing = true;
-						editButton.setText("Finish Editing");
-						editButton.setSelected(true);
-						addEvents();
-					}
-				}
-			});
-			add(editButton);
-		}
 	}
 
-	void addEvents()
+	void displayEvents()
 	{
 		if (eventsToDisplay != null)
 		{
@@ -184,14 +162,11 @@ public class CalendarPanel extends ContentPanel
 	{
 		public void actionPerformed(ActionEvent e)
 		{
-			JButton theButton = (JButton)e.getSource();
-
 			for (int i=0; i < detailButtons.length; i++)
 			{
-				if (detailButtons[i].equals(theButton))
+				if (detailButtons[i].equals(e.getSource()))
 				{
 					new EventPopup(eventsToDisplay[i]);
-
 					break;
 				}
 			}
