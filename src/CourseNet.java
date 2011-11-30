@@ -9,70 +9,76 @@ public class CourseNet extends JApplet {
 	ContentPanel stuffPanel;
 	Thread panelWatchdog;
 	static myDatabase myDb;
-	
+
 	public static boolean isStudent;
 	public static String username;
-	
+
 	public boolean testMode = false;
 
 	//Called when this applet is loaded into the browser.
-    public void init() {
-        //Execute a job on the event-dispatching thread; creating this applet's GUI.
-        try {
-            SwingUtilities.invokeAndWait(new Runnable() {
-                public void run() {
-                    createGUI();
-                    startDb();
-                    /*if(testMode)
+	public void init() {
+		//Execute a job on the event-dispatching thread; creating this applet's GUI.
+		try {
+			SwingUtilities.invokeAndWait(new Runnable() {
+				public void run() {
+					createGUI();
+					startDb();
+					/*if(testMode)
             		{
             			((LoginPanel)stuffPanel).usernameField.setText("jhenson");
             			((LoginPanel)stuffPanel).passwordField.setText("kermit");
             			((LoginPanel)stuffPanel).getLoginResponse();	
             		}*/
-                    new Thread(
-            		new Runnable() {
-                        public void run() {
-                        	while(true)
-                        	{
-                        		Panel panelType = stuffPanel.getNewPanelType();
-                        		if(!(panelType.equals(Panel.IDLE)))
-                        		{
-                        			containerPanel.remove(stuffPanel);
-                        			repaint();
-                        			
-                        			switch(panelType)
-                        			{
-                        			case BLANK:
-                        				stuffPanel = new ContentPanel();
-                        				break;
-                        			case LOGIN:
-                        				stuffPanel = new LoginPanel();
-                        				break;
-                        			case COURSES:
-                            			stuffPanel = new CoursesPanel();
-                            			break;
-                        			case CALENDAR:
-                            			stuffPanel = new CalendarPanel();
-                            			break;
-                        			}
-                        			
-                        			
-                        			containerPanel.add(stuffPanel);
-                        			repaint();
-                        		}
-                        	}
-                        }
-                    }).start();
-                }
-            });
-        } catch (Exception e) { 
-            System.err.println("createGUI didn't complete successfully");
-        }
-    }
-    
-    private void createGUI()
-    {
-        //Create and set up the content pane.
+					new Thread(
+							new Runnable() {
+								public void run() {
+									while(true)
+									{
+										Panel panelType = stuffPanel.getNewPanelType();
+										if(!(panelType.equals(Panel.IDLE)))
+										{
+											containerPanel.remove(stuffPanel);
+											repaint();
+
+											switch(panelType)
+											{
+											case BLANK:
+												stuffPanel = new ContentPanel();
+												break;
+											case LOGIN:
+												stuffPanel = new LoginPanel();
+												break;
+											case COURSES:
+												stuffPanel = new CoursesPanel();
+												break;
+											case CALENDAR:
+												stuffPanel = new CalendarPanel();
+												break;
+											}
+
+											containerPanel.add(stuffPanel);
+											repaint();
+										}
+
+										try {
+											Thread.sleep(100);
+											repaint();
+										} catch (InterruptedException e){
+											e.printStackTrace();
+										}
+									}
+								}
+							}).start();
+				}
+			});
+		} catch (Exception e) { 
+			System.err.println("createGUI didn't complete successfully");
+		}
+	}
+
+	private void createGUI()
+	{
+		//Create and set up the content pane.
 		Image image = getToolkit().getImage("../background.jpg");
 		containerPanel = new ImagePanel(image);
 		containerPanel.setPreferredSize(new Dimension(970, 678));
@@ -84,15 +90,15 @@ public class CourseNet extends JApplet {
 		containerPanel.add(stuffPanel);
 
 		getContentPane().add(containerPanel);
-    }
-    
-    // connects to database
-    private void startDb()
-    {
-    	myDb = new myDatabase();
-    	myDb.connect("jdbc:mysql://localhost/coursenet");
-    	myDb.dropTables();
-    	myDb.createTables();
-    	myDb.init();
-    }
+	}
+
+	// connects to database
+	private void startDb()
+	{
+		myDb = new myDatabase();
+		myDb.connect("jdbc:mysql://localhost/coursenet");
+		myDb.dropTables();
+		myDb.createTables();
+		myDb.init();
+	}
 }
