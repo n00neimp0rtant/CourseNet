@@ -131,11 +131,18 @@ public class CoursesPanel extends ContentPanel
 			courseTitle.setBounds(10, 10, courseTitle.getPreferredSize().width, courseTitle.getPreferredSize().height);
 			postings[i].add(courseTitle);
 			JLabel prof = new JLabel(c.teacher);
-			prof.setBounds(15, 30, prof.getPreferredSize().width, prof.getPreferredSize().height);
+			prof.setBounds(15, 40, prof.getPreferredSize().width, prof.getPreferredSize().height);
 			postings[i].add(prof);
 			JLabel time = new JLabel(c.time);
-			time.setBounds(15, 50, time.getPreferredSize().width, time.getPreferredSize().height);
+			time.setBounds(15, 55, time.getPreferredSize().width, time.getPreferredSize().height);
 			postings[i].add(time);
+			if (!CourseNet.isStudent && c.pending)
+			{
+				JLabel pending = new JLabel("Pending administrative approval");
+				pending.setForeground(Color.red);
+				pending.setBounds(15, 70, pending.getPreferredSize().width, pending.getPreferredSize().height);
+				postings[i].add(pending);
+			}
 
 			eventsButtons[i] = new JButton("Events");
 			eventsButtons[i].setBounds(10, 150, 70, eventsButtons[i].getPreferredSize().height);
