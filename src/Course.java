@@ -8,6 +8,7 @@ public class Course {
 	public String location;
 	public String time;
 	public String[] assignments;
+	public boolean pending = true;
 	
 	// blank constructor
 	public Course()
