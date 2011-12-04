@@ -11,6 +11,7 @@ public class myDatabase
 	// global variables
 	Connection conn = null;
 	Statement s;
+	PreparedStatement ps;
 	ResultSet rs;
 	
 	String query;
@@ -76,7 +77,7 @@ public class myDatabase
 			// courses
 			s.executeUpdate("create table Courses (id int unsigned not null auto_increment PRIMARY KEY, "
         		+ "number char(10), name char(40), description char(100), location char(40), time char(40), "
-        		+ " assignments char(100), status char(10))");
+        		+ " assignments char(100), status char(10), approved int)");
 			// enrollment
 			s.executeUpdate("create table Enrollment (id int unsigned not null auto_increment PRIMARY KEY, "
 				+ "course_name char(40), course_teacher char(40), roster char(200))");
@@ -563,6 +564,10 @@ public class myDatabase
 				temp.description = rs.getString("description");
 				temp.location = rs.getString("location");
 				temp.time = rs.getString("time");
+				if (rs.getInt("approved") == 0)
+					temp.pending = false;
+				else
+					temp.pending = true;
 				myCourses.add(i, temp);
 			}
 			
@@ -744,6 +749,42 @@ public class myDatabase
 			return grade;
 			
 		} catch (SQLException e) {/*System.out.println("Grade view failed: " + e);*/ return null;}
+	}
+	
+	// approve a course
+	public void adminApprove(Course c)
+	{
+		try {
+			s = conn.createStatement();
+			c.pending = false;
+			query = "update Courses set approved=1 where name='" + c.name + "'";
+			s.executeUpdate(query);
+		} catch (SQLException e) {System.out.println("Course approval failed: " + e);}
+	}
+	
+	// add teacher
+	public void addTeacher(String name, String username, String password, String email)
+	{	
+		try {
+			s = conn.createStatement();
+			
+			query = "insert into Teachers (name, username, password, email) values " +
+					"('" + name + "', '" + username + "', '" + password + "', '" + email + "')";
+			s.executeUpdate(query);
+			
+			} catch (SQLException e) {System.out.println("Add teacher failed: " + e);}
+	}
+	
+	// add student
+	public void addStudent(String name, String username, String password, String email)
+	{
+		try {
+			s = conn.createStatement();
+		
+			query = "insert into Teachers (name, username, password, email) values " +
+					"('" + name + "', '" + username + "', '" + password + "', '" + email + "')";
+			s.executeUpdate(query);
+			} catch (SQLException e) {System.out.println("Add student failed: " + e);}
 	}
 }
 
