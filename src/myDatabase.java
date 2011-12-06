@@ -789,6 +789,12 @@ public class myDatabase
 			s.executeUpdate(query);
 			} catch (SQLException e) {System.out.println("Add student failed: " + e);}
 	}
+	
+	// check admin password
+	public boolean checkAdminPassword(String password)
+	{
+		return password.equals("istrator");
+	}
 }
 
 
