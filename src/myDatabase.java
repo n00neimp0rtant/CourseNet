@@ -483,6 +483,7 @@ public class myDatabase
 		int numCourses = 0;
 		ArrayList<Course> myCourses = new ArrayList<Course>();
 		ArrayList<String> courseNames = new ArrayList<String>();
+		ArrayList<String> teacherNames = new ArrayList<String>();
 		Course temp;
 		String line;
 		String[] names;
@@ -501,7 +502,8 @@ public class myDatabase
 				{
 					if (names[i].equals(username))
 					{
-						courseNames.add(numCourses, rs.getString("course_name"));
+						courseNames.add(rs.getString("course_name"));
+						teacherNames.add(rs.getString("course_teacher"));
 						numCourses++;
 						i = 1000;
 					}
@@ -515,6 +517,7 @@ public class myDatabase
 				rs.first();
 				temp = new Course();
 				temp.name = courseNames.get(i);
+				temp.teacher = teacherNames.get(i);
 				temp.number = rs.getString("number");
 				temp.description = rs.getString("description");
 				temp.location = rs.getString("location");
@@ -559,7 +562,7 @@ public class myDatabase
 				rs.first();
 				temp = new Course();
 				temp.name = courseNames.get(i);
-				temp.teacher = name;
+				temp.teacher = username;
 				temp.number = rs.getString("number");
 				temp.description = rs.getString("description");
 				temp.location = rs.getString("location");
