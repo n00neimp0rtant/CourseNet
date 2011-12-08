@@ -568,9 +568,9 @@ public class myDatabase
 				temp.location = rs.getString("location");
 				temp.time = rs.getString("time");
 				if (rs.getInt("approved") == 0)
-					temp.pending = false;
+					temp.pendingAdd = false;
 				else
-					temp.pending = true;
+					temp.pendingAdd = true;
 				myCourses.add(i, temp);
 			}
 			
@@ -759,7 +759,7 @@ public class myDatabase
 	{
 		try {
 			s = conn.createStatement();
-			c.pending = false;
+			c.pendingAdd = false;
 			query = "update Courses set approved=1 where name='" + c.name + "'";
 			s.executeUpdate(query);
 		} catch (SQLException e) {System.out.println("Course approval failed: " + e);}
