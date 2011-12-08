@@ -308,9 +308,9 @@ public class myDatabase
 			s = conn.createStatement();
 			
 			// update course table
-			query = "insert into Courses (number, name, description, location, time, status) " +
+			query = "insert into Courses (number, name, description, location, time, status, approved) " +
 					"values ('" + c.number + "', '" + c.name + "', '" + c.description + "', '" + c.location + 
-							"', '" + c.time + "', '" + "Open" + "')";
+							"', '" + c.time + "', 'Open', '0')";
 			s.executeUpdate(query);
 			
 			// update enrollment table
@@ -431,40 +431,6 @@ public class myDatabase
 		} catch (SQLException e) {System.out.println("Document posting failed: " + e);}
 	}
 
-	// send email to students 
-	// need to figure out email procedure
-	// only displays right now
-	public void emailStudents(Course c, String message)
-	{
-		try {
-			s = conn.createStatement();
-			
-			query = "select * from Enrollment where course_name='" + c.name + "'";
-			rs = s.executeQuery(query);
-			
-			rs.first();
-			String line = rs.getString("roster");
-			String[] names = line.split(",");
-			String[] emails = new String[names.length];
-			for (int i = 0; i < names.length; i++)
-			{
-				query = "select * from Students where username='" + names[i] + "'";
-				rs = s.executeQuery(query);
-				rs.first();
-				emails[i] = rs.getString("email");
-			}
-			
-			for (int i = 0; i < emails.length; i++)
-			{
-				// Figure out actual email procedure
-				System.out.println("Sending to " + emails[i]);
-				System.out.println(message);
-				System.out.println("------");
-			}
-			
-		} catch (SQLException e) {System.out.println("Email failed: " + e);}
-	}
-
 	// show course roster
 	// returns array of names
 	public String[] viewRoster(Course c)
@@ -573,7 +539,7 @@ public class myDatabase
 				temp.description = rs.getString("description");
 				temp.location = rs.getString("location");
 				temp.time = rs.getString("time");
-				if (rs.getInt("approved") == 0)
+				if (rs.getInt("approved") == 1)
 					temp.pendingAdd = false;
 				else
 					temp.pendingAdd = true;
@@ -806,6 +772,7 @@ public class myDatabase
 	public ArrayList<Course> listUnapprovedAdds()
 	{
 		ArrayList<Course> list = new ArrayList<Course>();
+		ArrayList<String> courseNames = new ArrayList<String>();
 		Course temp;
 		try {
 			s = conn.createStatement();
@@ -823,6 +790,15 @@ public class myDatabase
 				temp.description = rs.getString("description");
 				temp.pendingAdd = true;
 				list.add(temp);
+				courseNames.add(temp.name);
+			}
+			
+			for (int i = 0; i < courseNames.size(); i++)
+			{
+				query = "select * from Enrollment where course_name='" + courseNames.get(i) + "'";
+				rs = s.executeQuery(query);
+				rs.first();
+				list.get(i).teacher = rs.getString("course_teacher");
 			}
 			
 			return list;
@@ -871,6 +847,18 @@ public class myDatabase
 			
 			return list;
 		} catch (SQLException e) {System.out.println("Deletion approved failed: " + e); return null;}
+	}
+	
+	// don't approve the delete
+	public void unapproveDelete(Course c)
+	{
+		try {
+			s = conn.createStatement();
+			
+			query = "update Courses set approved='1' where name='" + c.name + "'";
+			s.executeUpdate(query);
+			
+		} catch (SQLException e) {System.out.println("Delete unapproval failed: " + e);}
 	}
 }
 

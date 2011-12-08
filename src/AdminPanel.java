@@ -33,7 +33,7 @@ public class AdminPanel extends ContentPanel
 		approveAdd.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e)
 			{
-				ArrayList<Course> courseList = CourseNet.myDb.listOpenCourses();
+				ArrayList<Course> courseList = CourseNet.myDb.listUnapprovedAdds();
 
 				// display them and get the choice
 				Course c = (Course) JOptionPane.showInputDialog(null, "Choose a course to approve:",
@@ -46,11 +46,12 @@ public class AdminPanel extends ContentPanel
 				if (action == JOptionPane.YES_OPTION)
 				{
 					System.out.println("APPROVAL");
-					//CourseNet.myDb.approveAddCourse(c, CourseNet.username);
+					CourseNet.myDb.approveAdd(c);
 				}
 				else if(action == JOptionPane.NO_OPTION)
 				{
-					System.out.println("The course does not exist at all");
+					//System.out.println("The course does not exist at all");
+					CourseNet.myDb.approveDelete(c);
 				}
 			}
 		});
@@ -61,7 +62,7 @@ public class AdminPanel extends ContentPanel
 		approveDelete.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e)
 			{
-				ArrayList<Course> courseList = CourseNet.myDb.listOpenCourses();
+				ArrayList<Course> courseList = CourseNet.myDb.listPendingDeletes();
 
 				// display them and get the choice
 				Course c = (Course) JOptionPane.showInputDialog(null, "Choose a course to allow deletion:",
@@ -73,11 +74,12 @@ public class AdminPanel extends ContentPanel
 				if (action == JOptionPane.YES_OPTION)
 				{
 					System.out.println("DELETED");
-					//CourseNet.myDb.approveAddCourse(c, CourseNet.username);
+					CourseNet.myDb.approveDelete(c);
 				}
 				else if(action == JOptionPane.NO_OPTION)
 				{
-					System.out.println("The course goes back to active status");
+					//System.out.println("The course goes back to active status");
+					CourseNet.myDb.unapproveDelete(c);
 				}
 			}
 		});
