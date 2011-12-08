@@ -85,7 +85,7 @@ public class CourseNet extends JApplet {
 		//Create and set up the content pane.
 		Image image = getToolkit().getImage("../background.jpg");
 		containerPanel = new ImagePanel(image);
-		containerPanel.setPreferredSize(new Dimension(970, 678));
+		containerPanel.setPreferredSize(new Dimension(970, 680));
 
 		stuffPanel = new LoginPanel();
 		stuffPanel.setOpaque(false);
