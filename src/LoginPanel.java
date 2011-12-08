@@ -71,18 +71,12 @@ public class LoginPanel extends ContentPanel
 	public void getLoginResponse()
 	{
 		CourseNet.username = usernameField.getText();
-		if (CourseNet.username.equals("admin")) {switchToPanel(Panel.ADMIN);} // This should be removed once the administrator is actually in the database.
-		if(CourseNet.myDb.checkPassword(usernameField.getText(), String.valueOf(passwordField.getPassword())))
+		if (CourseNet.username.equals("admin") && CourseNet.myDb.checkAdminPassword(String.valueOf(passwordField.getPassword()))) {switchToPanel(Panel.ADMIN);} // This should be removed once the administrator is actually in the database.
+		else if(CourseNet.myDb.checkPassword(usernameField.getText(), String.valueOf(passwordField.getPassword())))
 		{
 			CourseNet.isStudent = CourseNet.myDb.isStudent(CourseNet.username);
-			if (CourseNet.username.equals("admin"))
-			{
-				switchToPanel(Panel.ADMIN);
-			}
-			else
-			{
-				switchToPanel(Panel.COURSES);
-			}
+			
+			switchToPanel(Panel.COURSES);
 		}
 		else
 		{
