@@ -126,16 +126,26 @@ public class CoursesPanel extends ContentPanel
 
 			// Basic Course Info
 			Course c = courses.get(i);
-			JLabel courseTitle = new JLabel(c.name);
+			JLabel courseTitle = new JLabel(c.number + ": " + c.name);
 			courseTitle.setFont(new Font("Arial Black", Font.PLAIN, 14));
 			courseTitle.setBounds(10, 10, courseTitle.getPreferredSize().width, courseTitle.getPreferredSize().height);
 			postings[i].add(courseTitle);
 			JLabel prof = new JLabel(c.teacher);
-			prof.setBounds(15, 40, prof.getPreferredSize().width, prof.getPreferredSize().height);
+			prof.setBounds(15, 30, prof.getPreferredSize().width, prof.getPreferredSize().height);
 			postings[i].add(prof);
 			JLabel time = new JLabel(c.time);
-			time.setBounds(15, 55, time.getPreferredSize().width, time.getPreferredSize().height);
+			time.setBounds(15, 45, time.getPreferredSize().width, time.getPreferredSize().height);
 			postings[i].add(time);
+			JLabel loc = new JLabel(c.location);
+			loc.setBounds(15, 60, loc.getPreferredSize().width, loc.getPreferredSize().height);
+			postings[i].add(loc);
+			JTextArea desc = new JTextArea("  " + c.description);
+			desc.setEditable(false);
+			desc.setOpaque(false);
+			desc.setLineWrap(true);
+			desc.setWrapStyleWord(true);
+			desc.setBounds(15, 80, 200, 75);
+			postings[i].add(desc);
 
 			if (!CourseNet.isStudent && (c.pendingAdd || c.pendingDelete))
 			{

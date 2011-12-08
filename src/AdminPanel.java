@@ -57,7 +57,7 @@ public class AdminPanel extends ContentPanel
 		add(approveAdd);
 		
 		approveDelete = new JButton("Approve Course Deletion");
-		approveDelete.setBounds(440, 150, 300, 200);
+		approveDelete.setBounds(520, 150, 300, 200);
 		approveDelete.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e)
 			{
@@ -82,5 +82,33 @@ public class AdminPanel extends ContentPanel
 			}
 		});
 		add(approveDelete);
+		
+		addStudent = new JButton("Add New Student");
+		addStudent.setBounds(100, 400, 300, 200);
+		addStudent.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e)
+			{
+				String name = JOptionPane.showInputDialog("Enter the name of the new student");
+				String user = JOptionPane.showInputDialog("Enter the student's username");
+				String pass = JOptionPane.showInputDialog("Enter the student's password");
+				String mail = JOptionPane.showInputDialog("Enter the student's email address");
+				CourseNet.myDb.addStudent(name, user, pass, mail);
+			}
+		});
+		add(addStudent);
+		
+		addProf = new JButton("Add Instructor");
+		addProf.setBounds(520, 400, 300, 200);
+		addProf.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e)
+			{
+				String name = JOptionPane.showInputDialog("Enter the name of the new instructor");
+				String user = JOptionPane.showInputDialog("Enter the instructor's username");
+				String pass = JOptionPane.showInputDialog("Enter the instructor's password");
+				String mail = JOptionPane.showInputDialog("Enter the instructor's email address");
+				CourseNet.myDb.addTeacher(name, user, pass, mail);
+			}
+		});
+		add(addProf);
 	}
 }
