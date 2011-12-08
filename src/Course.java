@@ -9,7 +9,7 @@ public class Course {
 	public String time;
 	public String[] assignments;
 	public boolean pendingAdd = true;
-	public boolean pendingDelete = true;
+	public boolean pendingDelete = false;
 	
 	// blank constructor
 	public Course()
@@ -20,6 +20,8 @@ public class Course {
 		location = null;
 		time = null;
 		teacher = null;
+		pendingAdd = true;
+		pendingDelete = false;
 	}
 	
 	// constructor with data
@@ -30,6 +32,8 @@ public class Course {
 		description = descript;
 		location = loc;
 		time = t;
+		pendingAdd = true;
+		pendingDelete = false;
 	}
 	
 	public String toString()
