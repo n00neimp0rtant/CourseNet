@@ -346,7 +346,7 @@ public class myDatabase
 			s = conn.createStatement();
 			
 			// delete from course table
-			query = "delete from Courses where name='" + c.name + "'";
+			query = "update Courses set approved='2' where name='" + c.name + "'";
 			s.executeUpdate(query);
 			
 			// delete from enrollment table
@@ -512,7 +512,7 @@ public class myDatabase
 			
 			for (int i = 0; i < numCourses; i++)
 			{
-				query = "select * from Courses where name='" + courseNames.get(i) + "'";
+				query = "select * from Courses where name='" + courseNames.get(i) + "' and approved!='0'";
 				rs = s.executeQuery(query);
 				rs.first();
 				temp = new Course();
@@ -568,9 +568,9 @@ public class myDatabase
 				temp.location = rs.getString("location");
 				temp.time = rs.getString("time");
 				if (rs.getInt("approved") == 0)
-					temp.pending = false;
+					temp.pendingAdd = false;
 				else
-					temp.pending = true;
+					temp.pendingAdd = true;
 				myCourses.add(i, temp);
 			}
 			
@@ -755,12 +755,12 @@ public class myDatabase
 	}
 	
 	// approve a course
-	public void adminApprove(Course c)
+	public void approveAdd(Course c)
 	{
 		try {
 			s = conn.createStatement();
-			c.pending = false;
-			query = "update Courses set approved=1 where name='" + c.name + "'";
+			c.pendingAdd = false;
+			query = "update Courses set approved='1' where name='" + c.name + "'";
 			s.executeUpdate(query);
 		} catch (SQLException e) {System.out.println("Course approval failed: " + e);}
 	}
@@ -794,6 +794,77 @@ public class myDatabase
 	public boolean checkAdminPassword(String password)
 	{
 		return password.equals("istrator");
+	}
+	
+	// list unapproved courses
+	public ArrayList<Course> listUnapprovedAdds()
+	{
+		ArrayList<Course> list = new ArrayList<Course>();
+		Course temp;
+		try {
+			s = conn.createStatement();
+			
+			query = "select * from Courses where approved='0'";
+			rs = s.executeQuery(query);
+			
+			while (rs.next())
+			{
+				temp = new Course();
+				temp.name = rs.getString("name");
+				temp.number = rs.getString("number");
+				temp.location = rs.getString("location");
+				temp.time = rs.getString("time");
+				temp.description = rs.getString("description");
+				temp.pendingAdd = true;
+				list.add(temp);
+			}
+			
+			return list;
+		} catch (SQLException e) {System.out.println("List unapproved courses failed: " + e); return null;}
+	}
+	
+	// approved deletion of a course
+	public void approveDelete(Course c)
+	{
+		try {
+			s = conn.createStatement();
+			
+			// delete from Courses
+			query = "delete from Courses where name = '" + c.name + "'";
+			s.executeUpdate(query);
+			
+			// delete from Enrollment
+			query = "delete from Enrollment where course_name='" + c.name + "'";
+			s.executeUpdate(query);
+		} catch (SQLException e) {System.out.println("Deletion approval failed: " + e); }
+	}
+	
+	// list courses requesting deletion
+	public ArrayList<Course> listPendingDeletes()
+	{
+		ArrayList<Course> list = new ArrayList<Course>();
+		Course temp;
+		try {
+			s = conn.createStatement();
+			
+			query = "select * from Courses where approved='2'";
+			rs = s.executeQuery(query);
+			
+			while(rs.next())
+			{
+				temp = new Course();
+				temp = new Course();
+				temp.name = rs.getString("name");
+				temp.number = rs.getString("number");
+				temp.location = rs.getString("location");
+				temp.time = rs.getString("time");
+				temp.description = rs.getString("description");
+				temp.pendingDelete = true;
+				list.add(temp);
+			}
+			
+			return list;
+		} catch (SQLException e) {System.out.println("Deletion approved failed: " + e); return null;}
 	}
 }
 

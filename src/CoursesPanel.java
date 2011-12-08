@@ -136,7 +136,7 @@ public class CoursesPanel extends ContentPanel
 			JLabel time = new JLabel(c.time);
 			time.setBounds(15, 55, time.getPreferredSize().width, time.getPreferredSize().height);
 			postings[i].add(time);
-			if (!CourseNet.isStudent && c.pending)
+			if (!CourseNet.isStudent && c.pendingAdd)
 			{
 				JLabel pending = new JLabel("Pending administrative approval");
 				pending.setForeground(Color.red);
