@@ -4,5 +4,5 @@
  * ch-ch-changes
  */
 public enum Panel {
-	BLANK, IDLE, LOGIN, COURSES, CALENDAR
+	BLANK, IDLE, LOGIN, COURSES, CALENDAR, ADMIN
 }

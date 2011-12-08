@@ -9,7 +9,7 @@ public class LoginPanel extends ContentPanel
 	public JTextField usernameField;
 	public JPasswordField passwordField;
 	public JButton loginButton;
-	
+
 	public LoginPanel()
 	{
 		setLayout(null);
@@ -66,15 +66,23 @@ public class LoginPanel extends ContentPanel
 			}
 		});
 		add(centeredVersionOf(loginButton));
-		
+
 	}
 	public void getLoginResponse()
 	{
 		CourseNet.username = usernameField.getText();
+		if (CourseNet.username.equals("admin")) {switchToPanel(Panel.ADMIN);} // This should be removed once the administrator is actually in the database.
 		if(CourseNet.myDb.checkPassword(usernameField.getText(), String.valueOf(passwordField.getPassword())))
 		{
 			CourseNet.isStudent = CourseNet.myDb.isStudent(CourseNet.username);
-			switchToPanel(Panel.COURSES);
+			if (CourseNet.username.equals("admin"))
+			{
+				switchToPanel(Panel.ADMIN);
+			}
+			else
+			{
+				switchToPanel(Panel.COURSES);
+			}
 		}
 		else
 		{

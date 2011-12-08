@@ -55,6 +55,9 @@ public class CourseNet extends JApplet {
 											case CALENDAR:
 												stuffPanel = new CalendarPanel();
 												break;
+											case ADMIN:
+												stuffPanel = new AdminPanel();
+												break;
 											}
 
 											containerPanel.add(stuffPanel);
