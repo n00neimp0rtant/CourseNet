@@ -151,7 +151,7 @@ public class CoursesPanel extends ContentPanel
 			{
 				JLabel pending = new JLabel("Pending administrative approval");
 				pending.setForeground(Color.red);
-				pending.setBounds(15, 70, pending.getPreferredSize().width, pending.getPreferredSize().height);
+				pending.setBounds(15, 30, pending.getPreferredSize().width, pending.getPreferredSize().height);
 				postings[i].add(pending);
 			}
 
