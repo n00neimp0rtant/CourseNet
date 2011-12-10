@@ -465,7 +465,6 @@ public class myDatabase
 			
 			query = "select * from Enrollment";
 			rs = s.executeQuery(query);
-			rs.first();
 			while(rs.next())
 			{
 				line = rs.getString("roster");
@@ -756,7 +755,7 @@ public class myDatabase
 		try {
 			s = conn.createStatement();
 		
-			query = "insert into Teachers (name, username, password, email) values " +
+			query = "insert into Students (name, username, password, email) values " +
 					"('" + name + "', '" + username + "', '" + password + "', '" + email + "')";
 			s.executeUpdate(query);
 			} catch (SQLException e) {System.out.println("Add student failed: " + e);}

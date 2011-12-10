@@ -45,7 +45,7 @@ public class AdminPanel extends ContentPanel
 				
 				if (action == JOptionPane.YES_OPTION)
 				{
-					System.out.println("APPROVAL");
+					//System.out.println("APPROVAL");
 					CourseNet.myDb.approveAdd(c);
 				}
 				else if(action == JOptionPane.NO_OPTION)
@@ -73,7 +73,7 @@ public class AdminPanel extends ContentPanel
 				int action = JOptionPane.showConfirmDialog(null, info, "Approve Deletion?", JOptionPane.YES_NO_CANCEL_OPTION);
 				if (action == JOptionPane.YES_OPTION)
 				{
-					System.out.println("DELETED");
+					//System.out.println("DELETED");
 					CourseNet.myDb.approveDelete(c);
 				}
 				else if(action == JOptionPane.NO_OPTION)
